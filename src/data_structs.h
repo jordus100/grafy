@@ -1,12 +1,6 @@
 #ifndef CGRAFY_DATA_STRUCTS_H
 #define CGRAFY_DATA_STRUCTS_H
 
-typedef struct graph{
-    int numberOfCols;
-    int numberOfRows;
-    vertex vertices[];
-} graph;
-
 typedef struct vertex{
     int vertexNumber;
     double weightLeft;
@@ -14,5 +8,11 @@ typedef struct vertex{
     double weightUp;
     double weightDown;
 } vertex;
+
+typedef struct graph{
+    int numberOfCols;
+    int numberOfRows;
+    vertex* vertices;
+} graph;
 
 #endif //CGRAFY_DATA_STRUCTS_H
