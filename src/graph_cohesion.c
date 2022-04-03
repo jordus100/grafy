@@ -37,19 +37,19 @@ int* getVertexNeighbors(graph* thisGraph, int vertex){
         neighbors[i] = -1;
     }
     i=0;
-    if((vertex+1) <= (totalVertices-1) && thisGraph->vertices[vertex+1].weightLeft>0){
+    if(((vertex+1) <= (totalVertices-1) && thisGraph->vertices[vertex+1].weightLeft>0) || thisGraph->vertices[vertex].weightRight>0){
         neighbors[i] = vertex+1;
         i++;
     }
-    if((vertex-1 >= 0) && thisGraph->vertices[vertex-1].weightRight>0){
+    if(((vertex-1 >= 0) && thisGraph->vertices[vertex-1].weightRight>0) || thisGraph->vertices[vertex].weightRight>0){
         neighbors[i] = vertex-1;
         i++;
     }
-    if((vertex - thisGraph->numberOfCols) > 0 && thisGraph->vertices[vertex - thisGraph->numberOfCols].weightDown > 0){
+    if(((vertex - thisGraph->numberOfCols) > 0 && thisGraph->vertices[vertex - thisGraph->numberOfCols].weightDown > 0) || thisGraph->vertices[vertex].weightUp>0){
         neighbors[i] = vertex - thisGraph->numberOfCols;
         i++;
     }
-    if((vertex + thisGraph->numberOfCols) <= (totalVertices-1) && thisGraph->vertices[vertex + thisGraph->numberOfCols].weightUp > 0){
+    if(((vertex + thisGraph->numberOfCols) <= (totalVertices-1) && thisGraph->vertices[vertex + thisGraph->numberOfCols].weightUp > 0) || thisGraph->vertices[vertex].weightDown>0){
         neighbors[i] = vertex + thisGraph->numberOfCols;
     }
     return neighbors;

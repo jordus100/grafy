@@ -10,7 +10,7 @@ int main(){
     thisGraph->vertices = malloc(4*sizeof(*(thisGraph->vertices)));
     int i;
 
-    thisGraph->vertices[0].weightRight = 0.5;
+    thisGraph->vertices[0].weightRight = 0;
     thisGraph->vertices[0].weightDown = 0;
     thisGraph->vertices[0].weightLeft = 0;
     thisGraph->vertices[0].weightUp = 0;
