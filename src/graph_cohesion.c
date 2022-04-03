@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "data_structs.h"
 #include "graph_cohesion.h"
 
@@ -63,6 +64,7 @@ int isGraphCohesive(graph* thisGraph){
     int *neighbors;
     int i;
     while(verQueue != NULL){
+        printf("%d\n", verQueue->vertexNum);
         vertex = vertexQueueRemove(verQueue);
         neighbors = getVertexNeighbors(thisGraph, vertex);
         for(i=0; i<4; i++){
