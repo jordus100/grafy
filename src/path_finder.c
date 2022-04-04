@@ -13,29 +13,31 @@
 //SORTOWANIE I DODAWANIA DO KOLEJKI
 //WHILE CHECKNEIGHBOUR TAK D£UGO JAK KOLEJKA NIE JEST PUSTA
 //TEST CA£OŒCI
-typedef struct
+typedef struct queueVertice
 {
 int verticeNumber;
 double distanceTo;
-struct priorityQueue* next;
+struct queueVertice* next;
 } queueVertice;
 
 queueVertice* initQueue(int numberFirst)
 {
-  queueVertice firstVertice;
+  queueVertice *firstVertice;
+  firstVertice = malloc(sizeof(*firstVertice));
   firstVertice->next=NULL;
   firstVertice->distanceTo=0;
   firstVertice->verticeNumber=numberFirst;
-  return *firstVertice;
+  return firstVertice;
 }
 
 void addToQueue(queueVertice* tail,double distance, int number)
 {
-  queueVertice newVertice;
+  queueVertice *newVertice;
+  newVertice = malloc(sizeof(*newVertice));
   newVertice->next=NULL;
   newVertice->distanceTo=distance;
   newVertice->verticeNumber=number;
-  tail->next=*newVertice;
+  tail->next=newVertice;
 }
 
 queueVertice* swapVertices(queueVertice* swapVertice)
@@ -45,10 +47,10 @@ queueVertice* swapVertices(queueVertice* swapVertice)
   queueVertice* secoundVerticeHolder=swapVertice->next;
   swapVertice->next=firstVerticeHolder;
   firstVerticeHolder->next=secoundVerticeHolder;
-  return *swapVertice;
+  return swapVertice;
 }
 
-void sortQueue(queueVertice* thisVertice,queueVertice* lastVertice)
+queueVertice* sortQueue(queueVertice* thisVertice,queueVertice* lastVertice)
 {
   if(thisVertice->distanceTo<lastVertice->distanceTo)
   {
@@ -59,18 +61,20 @@ void sortQueue(queueVertice* thisVertice,queueVertice* lastVertice)
     if(thisVertice->next!=NULL)
       return sortQueue(thisVertice->next,thisVertice);
     else
-      return thisVertice*;
+      return thisVertice;
 
 }
 
-void checkNeighbour(double*, graph*, int, double);
+void checkNeighbour(int *, double*, graph*, int, double);
 
-int* findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo);
+double findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo);
 
-int* findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo)
+double findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo)
 {
-  graph* queueHead;
-  graph* queueTail;
+  queueVertice* queueHead;
+  queueVertice* queueTail;
+  queueHead = malloc(sizeof(*queueHead));
+  queueTail = malloc(sizeof(*queueTail));
 
   double* distances=malloc(sizeof(distances)*thisGraph->numberOfCols*thisGraph->numberOfRows);
   int* ancestors=malloc(sizeof(ancestors)*thisGraph->numberOfCols*thisGraph->numberOfRows);
@@ -85,18 +89,18 @@ int* findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo)
     {
       addToQueue(queueTail,distances[i],i);
     }
-  queuetail=sortQueue(queueHead,queueHead->next);
+  queueTail=sortQueue(queueHead,queueHead->next);
   while(queueHead!=NULL)
     {
-      checkNeighbour(ancestors,distances,thisGraph,queueHead->verticeNumber,distanceTo);
+      checkNeighbour(ancestors,distances,thisGraph,queueHead->verticeNumber,queueHead->distanceTo);
       if(queueHead->next!=NULL)
       {
-        queueTail=sortqueue(queueHead,queueHead->next);
+        queueTail=sortQueue(queueHead,queueHead->next);
       }
       queueHead=queueHead->next;
     }
 
-  //printPath(ancestors,verticeTo,mode);
+  return distances[verticeTo];
 }
 
 void checkNeighbour(int* ancestors,double* distances,graph* thisGraph,int whoseNeighbour,double distanceToThisVertice)
