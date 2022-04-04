@@ -10,7 +10,6 @@ typedef struct vertexQueue{
 
 void vertexQueueAdd(vertexQueue** verQueue, int vertexNumber){
     if((*verQueue) == NULL) {
-        printf("adding\n");
         vertexQueue *newElement = malloc(sizeof(*newElement));
         newElement->vertexNum = vertexNumber;
         *verQueue = newElement;
@@ -41,7 +40,7 @@ int* getVertexNeighbors(graph* thisGraph, int vertex){
         neighbors[i] = vertex+1;
         i++;
     }
-    if(((vertex-1 >= 0) && thisGraph->vertices[vertex-1].weightRight>0) || thisGraph->vertices[vertex].weightRight>0){
+    if(((vertex-1 >= 0) && thisGraph->vertices[vertex-1].weightRight>0) || thisGraph->vertices[vertex].weightLeft>0){
         neighbors[i] = vertex-1;
         i++;
     }
@@ -70,12 +69,10 @@ int isGraphCohesive(graph* thisGraph){
     int *neighbors;
     while(verQueue != NULL){
         vertex = vertexQueueRemove(&verQueue);
-        printf("%d\n", vertex);
         neighbors = getVertexNeighbors(thisGraph, vertex);
         for(i=0; i<4; i++){
             if(neighbors[i]!=-1){
                 if(searched[neighbors[i]]!=1){
-                    printf("neighbor: %d", neighbors[i]);
                     vertexQueueAdd(&verQueue, neighbors[i]);
                     searched[neighbors[i]]=1;
                 }
@@ -86,6 +83,8 @@ int isGraphCohesive(graph* thisGraph){
         if(searched[i]==0)
             return 0;
     }
+    free(searched);
+    free(neighbors);
     return 1;
 }
 
