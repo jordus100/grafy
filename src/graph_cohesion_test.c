@@ -9,7 +9,7 @@ int main(){
     thisGraph->numberOfCols = 2;
     thisGraph->vertices = malloc(4*sizeof(*(thisGraph->vertices)));
     int i;
-
+/*/
     // one vertex has no connection from or to any other vertex - test case #1
     thisGraph->vertices[0].weightRight = 0;
     thisGraph->vertices[0].weightDown = 0.3;
@@ -102,10 +102,31 @@ int main(){
     thisGraph->vertices[3].weightDown = 0;
     thisGraph->vertices[3].weightLeft = 0.5;
     thisGraph->vertices[3].weightUp = 0.3;
-
     i = isGraphCohesive(thisGraph);
-    printf("test 4: %d\n", i);
+    printf("test 4: %d\n", i);*/
 
+        thisGraph->vertices[0].weightRight = 0.5;
+    thisGraph->vertices[0].weightDown = 0.3;
+    thisGraph->vertices[0].weightLeft = -1;
+    thisGraph->vertices[0].weightUp = -1;
+
+    thisGraph->vertices[1].weightRight = -1;
+    thisGraph->vertices[1].weightDown = 0.5;
+    thisGraph->vertices[1].weightLeft = 0.3;
+    thisGraph->vertices[1].weightUp = -1;
+
+    thisGraph->vertices[2].weightRight = 0.5;
+    thisGraph->vertices[2].weightDown = -1;
+    thisGraph->vertices[2].weightLeft = -1;
+    thisGraph->vertices[2].weightUp = 0.3;
+
+    thisGraph->vertices[3].weightRight = -1;
+    thisGraph->vertices[3].weightDown = -1;
+    thisGraph->vertices[3].weightLeft = 0.5;
+    thisGraph->vertices[3].weightUp = 0.3;
+    double j=0;
+    j = findShortestPath(thisGraph,0,2);
+    printf("test 5: %lf\n", j);
     free(thisGraph->vertices);
     free(thisGraph);
 }

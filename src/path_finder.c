@@ -11,8 +11,9 @@
 #endif
 //KOLEJKA PRIORYTETOWA
 //SORTOWANIE I DODAWANIA DO KOLEJKI
-//WHILE CHECKNEIGHBOUR TAK D£UGO JAK KOLEJKA NIE JEST PUSTA
-//TEST CA£OŒCI
+//WHILE CHECKNEIGHBOUR TAK Dï¿½UGO JAK KOLEJKA NIE JEST PUSTA
+//TEST CAï¿½Oï¿½CI
+
 typedef struct queueVertice
 {
 int verticeNumber;
@@ -44,7 +45,7 @@ queueVertice* swapVertices(queueVertice* swapVertice)
 {
   queueVertice* firstVerticeHolder=swapVertice;
   swapVertice=swapVertice->next;
-  queueVertice* secoundVerticeHolder=swapVertice->next;
+    queueVertice* secoundVerticeHolder=swapVertice->next;
   swapVertice->next=firstVerticeHolder;
   firstVerticeHolder->next=secoundVerticeHolder;
   return swapVertice;
@@ -52,50 +53,53 @@ queueVertice* swapVertices(queueVertice* swapVertice)
 
 queueVertice* sortQueue(queueVertice* thisVertice,queueVertice* lastVertice)
 {
-  if(thisVertice->distanceTo<lastVertice->distanceTo)
+  if((thisVertice->distanceTo)<(lastVertice->distanceTo))
   {
     lastVertice=swapVertices(lastVertice);
     return sortQueue(lastVertice->next,lastVertice);
   }
   else
     if(thisVertice->next!=NULL)
+    {
       return sortQueue(thisVertice->next,thisVertice);
+    }
     else
+    {
       return thisVertice;
-
+    }
 }
-
-void checkNeighbour(int *, double*, graph*, int, double);
-
-double findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo);
 
 double findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo)
 {
   queueVertice* queueHead;
   queueVertice* queueTail;
-  queueHead = malloc(sizeof(*queueHead));
   queueTail = malloc(sizeof(*queueTail));
-
   double* distances=malloc(sizeof(distances)*thisGraph->numberOfCols*thisGraph->numberOfRows);
   int* ancestors=malloc(sizeof(ancestors)*thisGraph->numberOfCols*thisGraph->numberOfRows);
 
-  for(int i=0;i<(thisGraph->numberOfCols) * (thisGraph->numberOfRows);i++) //w osi X'ów
+  for(int i=0;i<(thisGraph->numberOfCols) * (thisGraph->numberOfRows);i++) //w osi X'ï¿½w
     if(i!=verticeFrom)
       distances[i]=INFINITY;
     else
       distances[i]=0;
 
+
+  queueHead = initQueue(verticeFrom);
+  queueTail = queueHead;
   for(int i=0;i<(thisGraph->numberOfCols) * (thisGraph->numberOfRows);i++)
     {
-      addToQueue(queueTail,distances[i],i);
+      if(distances[i]!=0)
+        addToQueue(queueTail,distances[i],i);
+
     }
-  queueTail=sortQueue(queueHead,queueHead->next);
+  queueTail=sortQueue(queueHead->next,queueHead);
   while(queueHead!=NULL)
     {
       checkNeighbour(ancestors,distances,thisGraph,queueHead->verticeNumber,queueHead->distanceTo);
+
       if(queueHead->next!=NULL)
       {
-        queueTail=sortQueue(queueHead,queueHead->next);
+        queueTail=sortQueue(queueHead->next,queueHead);
       }
       queueHead=queueHead->next;
     }
