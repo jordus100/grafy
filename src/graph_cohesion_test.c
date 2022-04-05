@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "graph_cohesion.h"
 #include "data_structs.h"
+#include "path_finder.h"
 
 int main(){
     graph *thisGraph = malloc(sizeof(*thisGraph));
@@ -9,7 +10,7 @@ int main(){
     thisGraph->numberOfCols = 2;
     thisGraph->vertices = malloc(4*sizeof(*(thisGraph->vertices)));
     int i;
-/*/
+
     // one vertex has no connection from or to any other vertex - test case #1
     thisGraph->vertices[0].weightRight = 0;
     thisGraph->vertices[0].weightDown = 0.3;
@@ -103,7 +104,7 @@ int main(){
     thisGraph->vertices[3].weightLeft = 0.5;
     thisGraph->vertices[3].weightUp = 0.3;
     i = isGraphCohesive(thisGraph);
-    printf("test 4: %d\n", i);*/
+    printf("test 4: %d\n", i);
 
         thisGraph->vertices[0].weightRight = 0.5;
     thisGraph->vertices[0].weightDown = 0.3;
