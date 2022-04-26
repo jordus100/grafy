@@ -4,26 +4,13 @@
 #include "data_structs.h"
 #include "path_finder.h"
 #ifdef NAN
-/* NAN is supported */
 #endif
 #ifdef INFINITY
-/* INFINITY is supported */
 #endif
-//KOLEJKA PRIORYTETOWA
-//SORTOWANIE I DODAWANIA DO KOLEJKI
-//WHILE CHECKNEIGHBOUR TAK D�UGO JAK KOLEJKA NIE JEST PUSTA
-//TEST CA�O�CI
-
-typedef struct queueVertice
-{
-int verticeNumber;
-double distanceTo;
-struct queueVertice* next;
-} queueVertice;
 
 queueVertice* initQueue(int numberFirst)
 {
-  queueVertice *firstVertice;
+  queueVertice* firstVertice;
   firstVertice = malloc(sizeof(*firstVertice));
   firstVertice->next=NULL;
   firstVertice->distanceTo=0;
@@ -31,7 +18,7 @@ queueVertice* initQueue(int numberFirst)
   return firstVertice;
 }
 
-void addToQueue(queueVertice* tail,double distance, int number)
+queueVertice* addToQueue(queueVertice* tail,double distance, int number)
 {
   queueVertice *newVertice;
   newVertice = malloc(sizeof(*newVertice));
@@ -39,81 +26,135 @@ void addToQueue(queueVertice* tail,double distance, int number)
   newVertice->distanceTo=distance;
   newVertice->verticeNumber=number;
   tail->next=newVertice;
+  return tail->next;
 }
 
-queueVertice* swapVertices(queueVertice* swapVertice)
-{
-  queueVertice* firstVerticeHolder=swapVertice;
-  swapVertice=swapVertice->next;
-    queueVertice* secoundVerticeHolder=swapVertice->next;
-  swapVertice->next=firstVerticeHolder;
-  firstVerticeHolder->next=secoundVerticeHolder;
-  return swapVertice;
-}
-
-queueVertice* sortQueue(queueVertice* thisVertice,queueVertice* lastVertice)
-{
-  if((thisVertice->distanceTo)<(lastVertice->distanceTo))
-  {
-    lastVertice=swapVertices(lastVertice);
-    return sortQueue(lastVertice->next,lastVertice);
+queueVertice* sortQueue(queueVertice* thisVertice){
+  int count=1;
+  queueVertice* vertice = thisVertice;
+  
+  while(vertice->next!=NULL){
+    vertice=vertice->next;
+    count++;
   }
-  else
-    if(thisVertice->next!=NULL)
+  
+  int i=0;
+  vertice = thisVertice;
+  queueVertice** verticeArray=malloc(count*sizeof(**verticeArray));
+  
+  while(vertice->next!=NULL){
+    verticeArray[i]=malloc(sizeof(*verticeArray[i]));
+    verticeArray[i]=vertice;
+    i++;
+    vertice=vertice->next;
+  }
+  
+  verticeArray[i]=malloc(sizeof(*verticeArray[i]));
+  verticeArray[i]=vertice;
+  
+  for(int j=0;j<count;j++)
     {
-      return sortQueue(thisVertice->next,thisVertice);
+      for(int k=0;k<count-1;k++)
+      {
+        if(verticeArray[k]->distanceTo>verticeArray[k+1]->distanceTo)
+        {
+          vertice=verticeArray[k];
+          verticeArray[k]=verticeArray[k+1];
+          verticeArray[k+1]=vertice;
+        }
+      }
     }
-    else
-    {
-      return thisVertice;
-    }
+  for(int k=0;k<count-1;k++)
+    verticeArray[k]->next=verticeArray[k+1];
+  verticeArray[count-1]->next=NULL;
+  return verticeArray[0];
 }
 
-double findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo)
+double findShortestPath(graph* thisGraph, int verticeFrom, int verticeTo,int mode)
 {
   queueVertice* queueHead;
   queueVertice* queueTail;
-  queueTail = malloc(sizeof(*queueTail));
+  
   double* distances=malloc(sizeof(distances)*thisGraph->numberOfCols*thisGraph->numberOfRows);
   int* ancestors=malloc(sizeof(ancestors)*thisGraph->numberOfCols*thisGraph->numberOfRows);
-
-  for(int i=0;i<(thisGraph->numberOfCols) * (thisGraph->numberOfRows);i++) //w osi X'�w
+  
+  for(int i=0;i<(thisGraph->numberOfCols) * (thisGraph->numberOfRows);i++)
+  {
+    ancestors[i]=-1;
     if(i!=verticeFrom)
       distances[i]=INFINITY;
     else
       distances[i]=0;
-
+  }
 
   queueHead = initQueue(verticeFrom);
   queueTail = queueHead;
+  
   for(int i=0;i<(thisGraph->numberOfCols) * (thisGraph->numberOfRows);i++)
     {
       if(distances[i]!=0)
-        addToQueue(queueTail,distances[i],i);
-
+      {
+        queueTail=addToQueue(queueTail,distances[i],i);
+      }
     }
-  queueTail=sortQueue(queueHead->next,queueHead);
+  queueHead=sortQueue(queueHead);
+  
   while(queueHead!=NULL)
     {
-      checkNeighbour(ancestors,distances,thisGraph,queueHead->verticeNumber,queueHead->distanceTo);
-
+      checkNeighbour(ancestors,distances,thisGraph,queueHead->verticeNumber,queueHead->distanceTo,queueHead);
       if(queueHead->next!=NULL)
       {
-        queueTail=sortQueue(queueHead->next,queueHead);
+        queueHead=sortQueue(queueHead);
       }
       queueHead=queueHead->next;
     }
-
+  int count=1;
+  int firstVertice=verticeTo;
+  
+  if(distances[verticeTo]!=INFINITY)
+  {
+    printf("\n");
+    while(firstVertice!=verticeFrom)
+      {
+        count++;
+        firstVertice=ancestors[firstVertice];
+      }
+    int* orderedVertices=malloc(sizeof(orderedVertices)*count);
+    int firstVertice=verticeTo;
+    for(int i=0;i<count;i++)
+    {
+      orderedVertices[i]=firstVertice;
+      firstVertice=ancestors[firstVertice];
+    }
+    printPath(orderedVertices,mode,count,thisGraph);
+  }
+  else
+  {
+    printf("Path not found\n");
+  }
   return distances[verticeTo];
 }
 
-void checkNeighbour(int* ancestors,double* distances,graph* thisGraph,int whoseNeighbour,double distanceToThisVertice)
+void change(queueVertice* Head,int numberVertice,double newValue)
+{
+  if(Head->verticeNumber==numberVertice)
+  {
+    Head->distanceTo=newValue;
+  }
+  else
+  {
+      change(Head->next,numberVertice,newValue);
+  }
+}
+
+void checkNeighbour(int* ancestors,double* distances,graph* thisGraph,int whoseNeighbour,double distanceToThisVertice,queueVertice* Head)
 {
   if(thisGraph->vertices[whoseNeighbour].weightDown>=0)
     if(thisGraph->vertices[whoseNeighbour].weightDown+distanceToThisVertice<distances[whoseNeighbour+thisGraph->numberOfCols])
     {
       distances[whoseNeighbour+thisGraph->numberOfCols]=thisGraph->vertices[whoseNeighbour].weightDown+distanceToThisVertice;
       ancestors[whoseNeighbour+thisGraph->numberOfCols]=whoseNeighbour;
+      change(Head,whoseNeighbour+thisGraph->numberOfCols,thisGraph->vertices[whoseNeighbour].weightDown+distanceToThisVertice);
     }
 
   if(thisGraph->vertices[whoseNeighbour].weightUp>=0)
@@ -121,6 +162,7 @@ void checkNeighbour(int* ancestors,double* distances,graph* thisGraph,int whoseN
     {
       distances[whoseNeighbour-thisGraph->numberOfCols]=thisGraph->vertices[whoseNeighbour].weightUp+distanceToThisVertice;
       ancestors[whoseNeighbour-thisGraph->numberOfCols]=whoseNeighbour;
+      change(Head,whoseNeighbour-thisGraph->numberOfCols,thisGraph->vertices[whoseNeighbour].weightUp+distanceToThisVertice);
     }
 
   if(thisGraph->vertices[whoseNeighbour].weightRight>=0)
@@ -128,6 +170,7 @@ void checkNeighbour(int* ancestors,double* distances,graph* thisGraph,int whoseN
     {
       distances[whoseNeighbour+1]=thisGraph->vertices[whoseNeighbour].weightRight+distanceToThisVertice;
       ancestors[whoseNeighbour+1]=whoseNeighbour;
+      change(Head,whoseNeighbour+1,thisGraph->vertices[whoseNeighbour].weightRight+distanceToThisVertice);
     }
 
   if(thisGraph->vertices[whoseNeighbour].weightLeft>=0)
@@ -135,5 +178,47 @@ void checkNeighbour(int* ancestors,double* distances,graph* thisGraph,int whoseN
     {
       distances[whoseNeighbour-1]=thisGraph->vertices[whoseNeighbour].weightLeft+distanceToThisVertice;
       ancestors[whoseNeighbour-1]=whoseNeighbour;
+      change(Head,whoseNeighbour-1,thisGraph->vertices[whoseNeighbour].weightLeft+distanceToThisVertice);
     }
+}
+
+void printPath(int* verticleNumbersInOrder,int mode,int arrayLenght,graph* thisGraph)
+{
+  if(mode==1)
+  {
+  for(int i=0;i<arrayLenght;i++)
+    {
+    printf("%d",verticleNumbersInOrder[arrayLenght-i-1]);
+      if(i!=arrayLenght-1)
+        printf("=>");
+    }
+  }
+  else
+  {
+    if(mode==2)
+    {
+      for(int i=0;i<arrayLenght;i++)
+      {
+        printf("%d",verticleNumbersInOrder[arrayLenght-i-1]);
+        if(i!=arrayLenght-1)
+        {
+          printf("=(");
+          if(verticleNumbersInOrder[arrayLenght-i-1]==verticleNumbersInOrder[arrayLenght-i-2]+thisGraph->numberOfCols)
+            printf("%lf",thisGraph->vertices[verticleNumbersInOrder[arrayLenght-i-1]].weightUp);
+          if(verticleNumbersInOrder[arrayLenght-i-1]==verticleNumbersInOrder[arrayLenght-i-2]-thisGraph->numberOfCols)
+            printf("%lf",thisGraph->vertices[verticleNumbersInOrder[arrayLenght-i-1]].weightDown);
+          if(verticleNumbersInOrder[arrayLenght-i-1]==verticleNumbersInOrder[arrayLenght-i-2]+1)
+            printf("%lf",thisGraph->vertices[verticleNumbersInOrder[arrayLenght-i-1]].weightLeft);
+          if(verticleNumbersInOrder[arrayLenght-i-1]==verticleNumbersInOrder[arrayLenght-i-2]-1)
+            printf("%lf",thisGraph->vertices[verticleNumbersInOrder[arrayLenght-i-1]].weightRight);
+          printf(")>");
+        }
+      }
+    }
+    else
+    {
+      printf("Wrong mode format\n");
+    }
+  }
+  printf("\n");
 }

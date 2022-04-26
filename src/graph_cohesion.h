@@ -3,6 +3,6 @@
 
 #include "data_structs.h"
 
-int isGraphCohesive(graph* thisGraph);
+int isGraphCohesive(graph* thisGraph, int* searched);
 
 #endif //CGRAFY_GRAPH_COHESION_H

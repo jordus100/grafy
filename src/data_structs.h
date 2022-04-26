@@ -2,7 +2,6 @@
 #define CGRAFY_DATA_STRUCTS_H
 
 typedef struct vertex{
-    int vertexNumber;
     double weightLeft;
     double weightRight;
     double weightUp;

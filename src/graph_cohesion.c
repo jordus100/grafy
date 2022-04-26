@@ -28,48 +28,47 @@ int vertexQueueRemove(vertexQueue** verQueue){
     return vertexNum;
 }
 
-int* getVertexNeighbors(graph* thisGraph, int vertex){
-    int *neighbors = malloc(4*sizeof(*neighbors));
+int* getVertexConnectedNeighbors(graph* thisGraph, int vertex, int* neighbors){
     int i;
     int totalVertices = thisGraph->numberOfRows * thisGraph->numberOfCols;
     for(i=0; i<4; i++){
         neighbors[i] = -1;
     }
     i=0;
-    if(((vertex+1) <= (totalVertices-1) && thisGraph->vertices[vertex+1].weightLeft>0) || thisGraph->vertices[vertex].weightRight>0){
+    if(((vertex+1) <= (totalVertices-1) && thisGraph->vertices[vertex+1].weightLeft>0) && thisGraph->vertices[vertex].weightRight>0){
         neighbors[i] = vertex+1;
         i++;
     }
-    if(((vertex-1 >= 0) && thisGraph->vertices[vertex-1].weightRight>0) || thisGraph->vertices[vertex].weightLeft>0){
+    if(((vertex-1 >= 0) && thisGraph->vertices[vertex-1].weightRight>0) && thisGraph->vertices[vertex].weightLeft>0){
         neighbors[i] = vertex-1;
         i++;
     }
-    if(((vertex - thisGraph->numberOfCols) > 0 && thisGraph->vertices[vertex - thisGraph->numberOfCols].weightDown > 0) || thisGraph->vertices[vertex].weightUp>0){
+    if(((vertex - thisGraph->numberOfCols) > 0 && thisGraph->vertices[vertex - thisGraph->numberOfCols].weightDown > 0) && thisGraph->vertices[vertex].weightUp>0){
         neighbors[i] = vertex - thisGraph->numberOfCols;
         i++;
     }
-    if(((vertex + thisGraph->numberOfCols) <= (totalVertices-1) && thisGraph->vertices[vertex + thisGraph->numberOfCols].weightUp > 0) || thisGraph->vertices[vertex].weightDown>0){
+    if(((vertex + thisGraph->numberOfCols) <= (totalVertices-1) && thisGraph->vertices[vertex + thisGraph->numberOfCols].weightUp > 0) && thisGraph->vertices[vertex].weightDown>0){
         neighbors[i] = vertex + thisGraph->numberOfCols;
     }
     return neighbors;
 }
 
-int isGraphCohesive(graph* thisGraph){
+int isGraphCohesive(graph* thisGraph, int* searched){
     vertexQueue *verQueue = malloc(sizeof(*verQueue));
     verQueue->vertexNum = 0;
     verQueue->next = NULL;
     int i;
     int totalVertices = thisGraph->numberOfRows * thisGraph->numberOfCols;
-    int *searched = malloc( totalVertices * sizeof(*searched));
+    searched = malloc( totalVertices * sizeof(*searched));
     for(i=0; i<totalVertices; i++)
         searched[i] = 0;
     searched[0] = 1;
 
     int vertex;
-    int *neighbors;
+    int *neighbors = malloc(4*sizeof(*neighbors));
     while(verQueue != NULL){
         vertex = vertexQueueRemove(&verQueue);
-        neighbors = getVertexNeighbors(thisGraph, vertex);
+        neighbors = getVertexConnectedNeighbors(thisGraph, vertex, neighbors);
         for(i=0; i<4; i++){
             if(neighbors[i]!=-1){
                 if(searched[neighbors[i]]!=1){
@@ -80,11 +79,12 @@ int isGraphCohesive(graph* thisGraph){
         }
     }
     for(i=0; i<totalVertices; i++){
-        if(searched[i]==0)
-            return 0;
+        if(searched[i]==0){
+            free(neighbors);
+            return 1;
+        }
     }
-    free(searched);
     free(neighbors);
-    return 1;
+    return 0;
 }
 
