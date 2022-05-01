@@ -1,0 +1,94 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+\usepackage{fancyhdr} 
+\usepackage{lastpage}
+\usepackage{ifthen}
+\usepackage{hyperref}
+
+\title{Sprawozdanie końcowe z programu na projekt CGrafy}
+\author{Szymon Posiadała i Jordan Parviainen}
+\date{23.04.2022r.}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\lhead{\ifthenelse{\value{page}=1}{}{Sprawozdanie końcowe CGrafy}}
+\rhead{\ifthenelse{\value{page}=1}{}{Szymon Posiadała i Jordan Parviainen}}
+\cfoot{Strona \thepage \hspace{1pt} z \pageref{LastPage}}
+
+\fancypagestyle{firststyle}
+{
+    \renewcommand{\headrulewidth}{0pt}
+    \cfoot{Strona \thepage \hspace{1pt} z \pageref{LastPage}}
+}
+
+\setlength{\belowcaptionskip}{20pt}
+
+\begin{document}
+\maketitle
+
+\thispagestyle{firststyle}
+\section{Osiągnięcie celu projektu}
+Cel projektu będący wytworzeniem oprogramowania operującego na grafach uznaje się za osiągnięty.
+Program tworzony w ramach projektu znajduje najkrótszą możliwą ścieżkę pomiędzy dwoma wybranymi wierzchołkami oraz sprawdza, czy graf jest spójny. 
+Potrafi on generować grafy o zadanej liczbie kolumn i wierszy w 3 trybach.
+Program dodatkowo wyposażony jest w możliwość zapisu wygenerowanego grafu
+do pliku oraz odczytu grafu z takiego pliku. W programie wykorzystywane są dwa algorytmy:
+\begin{itemize}
+\item algorytm Dijkstry – algorytm dzięki, któremu wyszukiwana jest najkrótsza ścieżka,
+\item algorytm BFS – algorytm umożliwiający sprawdzenie czy graf jest spójny.
+\end{itemize}
+
+
+\section{Co zostało zaimplementowane}
+\begin{itemize}
+    \item main.c - główny moduł sterujący pracą programu i przetwarzający argumenty wejścia
+    \item graph\_generator.c \\
+    Generator grafu oferuje stworzenie grafu w 3 trybach:
+        \begin{enumerate}
+            \item tryb pierwszy, gdzie każdy wierzchołek grafu ma połączenie z każdym sąsiadującym wierzchołkiem   
+            \item tryb drugi, gdzie graf generowany jest losowo na zadanym obszarze(siatce) i graf w obszarze wygenerowanym jest spójny
+            \item tryb trzeci, gdzie graf generowany jest losowo na zadanym obszarze(siatce) i graf w obszarze wygenerowanym jest niekoniecznie spójny
+        \end{enumerate}
+    \item file\_handler.c
+         \begin{enumerate}
+            \item parseGraphFromFile(): funkcja ta odczytuje graf z pliku o formacie opisanym w Specyfikacji Funkcjonalnej zapisuje go do struktury danych w programie
+            \item saveGraphToFile(): funkcja ta zapisuje graf ze struktury danych do pliku w formacie opisanym w Specyfikacji Funkcjonalnej
+        \end{enumerate}
+    \item graph\_cohesion.c
+         \begin{enumerate}
+            \item isGraphCohesive(): funkcja wykorzystująca algorytm BFS sprawdzająca czy graf jest spójny. Dodatkowo zwraca tablicę przeszukanych wierzchołków.
+        \end{enumerate}
+    \item path\_finder.c \\
+    findShortestPath(): funkcja wykorzystująca algorytm Dijkstry znajdująca najkrótszą ścieżkę pomiędzy danymi wierzchołkami, a następnie wypisuje ją w jednym z dwóch trybów:
+         \begin{enumerate}
+            \item tryb pierwszy, gdzie wypisywane są jedynie kolejne wierzchołki oddzielone znakami "=>"
+            \item tryb drugi, gdzie wypisywane są również wagi między wierzchołkami. Poszczególne 
+            wierzchołki oddzielane są przez: "=(" + waga\_krawędzi\_między\_wierzchołkami + ")>"
+        \end{enumerate}
+\end{itemize}
+\section{Różnice względem planowanej wersji}
+    Wywołania poszczególnych funkcji różnią się szczegółami względem Specyfikacji Implementacyjnej.
+\section{Testy}
+    Zrobione zostało kilka testów do pojedynczych modułów. Testy są uruchamiane przez program Make i są w większości automatyczne - porównują wyjście testu do wyjścia wzorcowego.
+\section{Co teraz zrobilibyśmy inaczej}
+    \begin{enumerate}
+        \item Zastosowalibyśmy bardziej przejrzystą strukturę plików w projekcie - aktualnie wszystko jest w jednym katalogu src i się miesza. 
+        \item Użylibyśmy specjalnie zmodyfikowanej tablicy zamiast samodzielnie napisanej kolejki priorytetowej - kolejka powodowała wiele problemów podczas sortowania tak że obecnie i tak musimy zamienić ją na tablicę.
+    \end{enumerate}
+\end{document}
