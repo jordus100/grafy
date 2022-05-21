@@ -2,10 +2,11 @@ package com.example.jgrafy;
 
 class Vertex {
 
-    double weightLeft;
-    double weightRight;
-    double weightUp;
-    double weightDown;
+    double weightLeft = -1;
+    double weightRight = -1;
+    double weightUp = -1;
+    double weightDown = -1;
+
 
 
 }
