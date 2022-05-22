@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\Jordu\\Documents\\Programming\\F1NextRace\\JGrafy\\data\\mygraph");
+            Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\Jordu\\Documents\\Programming\\F1NextRace\\JGrafy\\data\\mygraph2");
             System.out.println(graph.getNumOfRows());
             System.out.println(graph.getNumOfColumns());
             for(int i=0; i<graph.getNumOfRows(); i++){

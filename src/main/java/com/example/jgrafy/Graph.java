@@ -63,27 +63,27 @@ class Graph {
     }
 
     public int getNeighbour(int verticeNum, Direction direction) {
-        if (direction.compareTo(Direction.Left) == 1) {
+        if (direction.compareTo(Direction.Left) == 0) {
             if ((verticeNum % numOfColumns) != 0)
                 return verticeNum - 1;
             else
                 return -1;
         }
-        if (direction.compareTo(Direction.Right) == 1) {
+        if (direction.compareTo(Direction.Right) == 0) {
             if (((verticeNum + 1) % numOfColumns) != 0)
                 return verticeNum + 1;
             else
                 return -1;
         }
-        if (direction.compareTo(Direction.Up) == 1) {
+        if (direction.compareTo(Direction.Up) == 0) {
             if (verticeNum >= numOfColumns)
-                return verticeNum + numOfColumns;
+                return verticeNum - numOfColumns;
             else
                 return -1;
         }
-        if (direction.compareTo(Direction.Down) == 1) {
+        if (direction.compareTo(Direction.Down) == 0) {
             if ((verticeNum / numOfColumns) + 1 != numOfRows)
-                return verticeNum - numOfColumns;
+                return verticeNum + numOfColumns;
             else
                 return -1;
         }
