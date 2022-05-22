@@ -15,6 +15,7 @@ public class Main {
             }
             GraphAnalyzer.CohesionRef cohesionRef = GraphAnalyzer.checkCohesion(graph, 0);
             System.out.println("\n" + cohesionRef.cohesive);
+            graph.saveToFile("C:\\Users\\Jordu\\Documents\\Programming\\F1NextRace\\JGrafy\\data\\mygraph3");
         }
         catch (Exception e){
             System.out.println(e.getMessage());

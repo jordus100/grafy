@@ -1,5 +1,9 @@
 package com.example.jgrafy;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 class Graph {
 
     private int numOfColumns;
@@ -90,5 +94,26 @@ class Graph {
         return -2;
     }
 
+    public void saveToFile(String fileName) throws IOException {
+        FileWriter fileWriter = new FileWriter(fileName);
+        PrintWriter writer = new PrintWriter(fileWriter);
+        writer.printf("%d %d\n", numOfRows, numOfColumns);
+        for(int i=0; i<getNumOfVertices(); i++){
+            writer.print("\t");
+            for(Direction direction : Direction.values()){
+                if(getNeighbour(i, direction) != -1)
+                    if(direction == Direction.Right)
+                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightRight);
+                    else if(direction == Direction.Left)
+                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightLeft);
+                    else if(direction == Direction.Up)
+                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightUp);
+                    else if(direction == Direction.Down)
+                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightDown);
+            }
+            writer.print("\n");
+        }
+        writer.close();
+    }
 
 }

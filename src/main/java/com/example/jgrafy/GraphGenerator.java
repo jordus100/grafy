@@ -35,6 +35,7 @@ class GraphGenerator {
             double weight = Double.parseDouble(split[1]);
             graph.setVertice(vertexNum, graph.getDirection(vertexNum, vertexConnection), weight);
         }
+        sc.close();
         return graph;
     }
 }
