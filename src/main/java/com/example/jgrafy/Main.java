@@ -5,10 +5,15 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Graph graph = GraphGenerator.readGraphfromFile("C:\\Users\\Jordu\\Documents\\Programming\\F1NextRace\\JGrafy\\data\\mygraph");
+            Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\Jordu\\Documents\\Programming\\F1NextRace\\JGrafy\\data\\mygraph");
             System.out.println(graph.getNumOfRows());
             System.out.println(graph.getNumOfColumns());
-            System.out.println(graph.getVertices()[0].weightRight);
+            for(int i=0; i<graph.getNumOfRows(); i++){
+                for(int n=0; n< graph.getNumOfColumns(); n++)
+                    System.out.print(" " + n + " " + graph.getVertices()[graph.getNumOfColumns()*i+n].weightRight);
+                System.out.print("\n");
+            }
+
         }
         catch (Exception e){
             System.out.println(e.getMessage());
