@@ -13,7 +13,8 @@ public class Main {
                     System.out.print(" " + n + " " + graph.getVertices()[graph.getNumOfColumns()*i+n].weightRight);
                 System.out.print("\n");
             }
-
+            GraphAnalyzer.CohesionRef cohesionRef = GraphAnalyzer.checkCohesion(graph, 0);
+            System.out.println("\n" + cohesionRef.cohesive);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
