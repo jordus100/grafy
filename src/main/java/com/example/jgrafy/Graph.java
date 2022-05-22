@@ -37,6 +37,10 @@ class Graph {
 
     private Vertex[] vertices;
 
+    public int getNumOfVertices(){
+        return numOfRows*numOfColumns;
+    }
+
     public Graph(int numOfRows, int numOfColumns){
         this.numOfRows = numOfRows;
         this.numOfColumns = numOfColumns;
