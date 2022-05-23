@@ -54,6 +54,7 @@ abstract class GraphGenerator {
         return rand;
     }
 
+
     public static Graph generateRandomGraph(int numberOfRows, int numberOfColumns) {
         Graph graph = new Graph(numberOfRows, numberOfColumns);
         double connectionChance = 0.8;
@@ -71,6 +72,21 @@ abstract class GraphGenerator {
     }
 
     public static Graph generateCohesiveGraph(int numberOfRows, int numberOfColumns) {
+        Graph graph = new Graph(numberOfRows, numberOfColumns);
+        for (int i = 0; i < numberOfRows * numberOfColumns; i++) {
+            if (graph.getNeighbour(i, Direction.Up) != -1)
+                graph.setVertice(i, Direction.Up, random());
+            if (graph.getNeighbour(i, Direction.Down) != -1)
+                graph.setVertice(i, Direction.Down, random());
+            if (graph.getNeighbour(i, Direction.Right) != -1)
+                graph.setVertice(i, Direction.Right, random());
+            if (graph.getNeighbour(i, Direction.Left) != -1)
+                graph.setVertice(i, Direction.Left, random());
+        }
+        return graph;
+    }
+
+    public static Graph generateCohesiveRandomGraph(int numberOfRows, int numberOfColumns) {
         Graph graph = new Graph(numberOfRows, numberOfColumns);
         double connectionChance = 0.8;
         for (int i = 0; i < numberOfRows * numberOfColumns; i++) {
