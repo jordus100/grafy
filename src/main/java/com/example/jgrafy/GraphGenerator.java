@@ -50,10 +50,24 @@ abstract class GraphGenerator {
     }
 
     public static double random() {
-        double rand = new Random().nextFloat();
+        double rand = new Random().nextFloat()+0.00000000000000001;
         return rand;
     }
-
+    public static Graph generateFullGraph(int numberOfRows, int numberOfColumns) {
+        Graph graph = new Graph(numberOfRows, numberOfColumns);
+        double connectionChance = 0.8;
+        for (int i = 0; i < numberOfRows * numberOfColumns; i++) {
+            if (graph.getNeighbour(i, Direction.Up) != -1)
+                graph.setVertice(i, Direction.Up, random());
+            if (graph.getNeighbour(i, Direction.Down) != -1)
+                graph.setVertice(i, Direction.Down, random());
+            if (graph.getNeighbour(i, Direction.Right) != -1)
+                graph.setVertice(i, Direction.Right, random());
+            if (graph.getNeighbour(i, Direction.Left) != -1)
+                graph.setVertice(i, Direction.Left, random());
+        }
+        return graph;
+    }
     public static Graph generateRandomGraph(int numberOfRows, int numberOfColumns) {
         Graph graph = new Graph(numberOfRows, numberOfColumns);
         double connectionChance = 0.8;
