@@ -65,4 +65,33 @@ class GraphGenerator {
         }
         return graph;
     }
+
+    public static Graph generateCohesiveGraph(int numberOfRows,int numberOfColumns){
+        Graph graph=new Graph( numberOfRows,numberOfColumns);
+        double connectionChance=0.8;
+        for (int i=0;i<numberOfRows*numberOfColumns;i++){
+            if(graph.getNeighbour(i,Direction.Up)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Up,random());
+            if(graph.getNeighbour(i,Direction.Down)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Down,random());
+            if(graph.getNeighbour(i,Direction.Right)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Right,random());
+            if(graph.getNeighbour(i,Direction.Left)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Left,random());
+        }
+        int j=-1;
+        while(false==GraphAnalyzer.checkCohesion(graph,0).cohesive){
+            for(int i=0;i<numberOfRows*numberOfColumns;i++)
+            {
+                j=i;
+                if(GraphAnalyzer.checkCohesion(graph,0).explored[i]==false)
+                    break;
+            }
+            if(graph.getNeighbour(j,Direction.Up)!=-1)
+                graph.setVertice(j,Direction.Up,random());
+            if(graph.getNeighbour(j,Direction.Left)!=-1)
+                graph.setVertice(j,Direction.Left,random());
+        }
+        return graph;
+    }
 }
