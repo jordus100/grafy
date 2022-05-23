@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-class GraphGenerator {
+abstract class GraphGenerator {
 
     public static Graph readGraphFromFile(String filePath) throws Exception {
         Scanner sc = new Scanner(new File(filePath)).useDelimiter(Pattern.compile("\\s+"));
@@ -38,4 +38,5 @@ class GraphGenerator {
         sc.close();
         return graph;
     }
+    public abstract Graph generateGraph(int numOfRows, int numOfCols);
 }
