@@ -113,13 +113,16 @@ abstract class GraphGenerator {
             if (graph.getNeighbour(j, Direction.Up) != -1) {
                 System.out.print("\n HERE ");
                 graph.setVertice(j, Direction.Up, random());
+                graph.setVertice(graph.getNeighbour(j,Direction.Up), Direction.Down, random());
             }
             if (graph.getNeighbour(j, Direction.Left) != -1) {
                 graph.setVertice(j, Direction.Left, random());
-                System.out.print("\n HERE ");
+                graph.setVertice(graph.getNeighbour(j,Direction.Left), Direction.Right, random());
+
             }
         }
         return graph;
-        //public abstract Graph generateGraph(int numOfRows, int numOfCols);
     }
+        public abstract Graph generateGraph(int numOfRows, int numOfCols);
+
 }

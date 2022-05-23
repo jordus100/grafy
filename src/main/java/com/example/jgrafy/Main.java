@@ -22,7 +22,7 @@ public class Main {
         }*/
         try {
            // Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\posia\\Desktop\\JIMP2\\test2.txt");
-            Graph graph =GraphGenerator.generateRandomGraph(15,15);
+            Graph graph =GraphGenerator.generateCohesiveGraph(15,15);
             System.out.print("Wczytano \n");
             GraphAnalyzer.findShortestPath(224,0,graph);
         }
