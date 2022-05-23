@@ -3,6 +3,7 @@ package com.example.jgrafy;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -16,13 +17,13 @@ abstract class GraphGenerator {
         //now reading the rows
         sc.nextLine();
         int vertexNum = 0;
-        while(vertexNum <= graph.getNumOfRows()* graph.getNumOfColumns()){
+        while (vertexNum <= graph.getNumOfRows() * graph.getNumOfColumns()) {
             System.out.println(vertexNum);
             String connection = sc.findInLine(Pattern.compile("\\d+ :\\d.\\d+"));
-            if(connection == null){
-                try{
+            if (connection == null) {
+                try {
                     sc.nextLine();
-                } catch (NoSuchElementException e){
+                } catch (NoSuchElementException e) {
                     break;
                 }
                 vertexNum++;
@@ -37,6 +38,72 @@ abstract class GraphGenerator {
         }
         sc.close();
         return graph;
+
     }
-    public abstract Graph generateGraph(int numOfRows, int numOfCols);
+
+    public static boolean connection(double chance) {
+        double rand = new Random().nextFloat();
+        if (chance > rand)
+            return true;
+        else
+            return false;
+    }
+
+    public static double random() {
+        double rand = new Random().nextFloat();
+        return rand;
+    }
+
+    public static Graph generateRandomGraph(int numberOfRows, int numberOfColumns) {
+        Graph graph = new Graph(numberOfRows, numberOfColumns);
+        double connectionChance = 0.8;
+        for (int i = 0; i < numberOfRows * numberOfColumns; i++) {
+            if (graph.getNeighbour(i, Direction.Up) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Up, random());
+            if (graph.getNeighbour(i, Direction.Down) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Down, random());
+            if (graph.getNeighbour(i, Direction.Right) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Right, random());
+            if (graph.getNeighbour(i, Direction.Left) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Left, random());
+        }
+        return graph;
+    }
+
+    public static Graph generateCohesiveGraph(int numberOfRows, int numberOfColumns) {
+        Graph graph = new Graph(numberOfRows, numberOfColumns);
+        double connectionChance = 0.8;
+        for (int i = 0; i < numberOfRows * numberOfColumns; i++) {
+            if (graph.getNeighbour(i, Direction.Up) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Up, random());
+            if (graph.getNeighbour(i, Direction.Down) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Down, random());
+            if (graph.getNeighbour(i, Direction.Right) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Right, random());
+            if (graph.getNeighbour(i, Direction.Left) != -1 && connection(connectionChance) == true)
+                graph.setVertice(i, Direction.Left, random());
+        }
+        int j = -1;
+        while (false == GraphAnalyzer.checkCohesion(graph, 0).cohesive) {
+
+            for (int i = 0; i < numberOfRows * numberOfColumns; i++) {
+                j = i;
+                System.out.print(GraphAnalyzer.checkCohesion(graph, 0).explored[i]);
+                if (GraphAnalyzer.checkCohesion(graph, 0).explored[i] == false) {
+                    System.out.print("\nNiespojny " + j);
+                    break;
+                }
+            }
+            if (graph.getNeighbour(j, Direction.Up) != -1) {
+                System.out.print("\n HERE ");
+                graph.setVertice(j, Direction.Up, random());
+            }
+            if (graph.getNeighbour(j, Direction.Left) != -1) {
+                graph.setVertice(j, Direction.Left, random());
+                System.out.print("\n HERE ");
+            }
+        }
+        return graph;
+        //public abstract Graph generateGraph(int numOfRows, int numOfCols);
+    }
 }
