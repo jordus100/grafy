@@ -50,10 +50,9 @@ abstract class GraphGenerator {
     }
 
     public static double random() {
-        double rand = new Random().nextFloat();
+        double rand = new Random().nextFloat()+0.00000000000000001;
         return rand;
     }
-
 
     public static Graph generateRandomGraph(int numberOfRows, int numberOfColumns) {
         Graph graph = new Graph(numberOfRows, numberOfColumns);
