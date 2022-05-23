@@ -21,9 +21,10 @@ public class Main {
             System.out.println(e.getMessage());
         }*/
         try {
-            Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\posia\\Desktop\\JIMP2\\test2.txt");
+           // Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\posia\\Desktop\\JIMP2\\test2.txt");
+            Graph graph =GraphGenerator.generateRandomGraph(15,15);
             System.out.print("Wczytano \n");
-            GraphAnalyzer.findShortestPath(27,0,graph);
+            GraphAnalyzer.findShortestPath(224,0,graph);
         }
         catch (Exception e){
             System.out.println(e.getMessage());

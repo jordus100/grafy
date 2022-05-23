@@ -21,7 +21,6 @@ class Graph {
     public Vertex[] getVertices() {
         return vertices;
     }
-
     public void setVertice(int vertexNum, Direction weightDirection, double value) {
         switch (weightDirection) {
             case Down:

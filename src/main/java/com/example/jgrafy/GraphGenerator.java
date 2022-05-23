@@ -3,6 +3,7 @@ package com.example.jgrafy;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,32 @@ class GraphGenerator {
             graph.setVertice(vertexNum, graph.getDirection(vertexNum, vertexConnection), weight);
         }
         sc.close();
+        return graph;
+    }
+    public static boolean connection(double chance) {
+        double rand=new Random().nextFloat();
+        if (chance>rand)
+        return true;
+        else
+        return false;
+    }
+    public static double random() {
+        double rand=new Random().nextFloat();
+        return rand;
+    }
+    public static Graph generateRandomGraph(int numberOfRows,int numberOfColumns){
+        Graph graph=new Graph( numberOfRows,numberOfColumns);
+        double connectionChance=0.8;
+        for (int i=0;i<numberOfRows*numberOfColumns;i++){
+            if(graph.getNeighbour(i,Direction.Up)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Up,random());
+            if(graph.getNeighbour(i,Direction.Down)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Down,random());
+            if(graph.getNeighbour(i,Direction.Right)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Right,random());
+            if(graph.getNeighbour(i,Direction.Left)!=-1 && connection(connectionChance)==true)
+                graph.setVertice(i,Direction.Left,random());
+        }
         return graph;
     }
 }
