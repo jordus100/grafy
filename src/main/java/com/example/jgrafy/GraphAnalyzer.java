@@ -50,19 +50,10 @@ class GraphAnalyzer {
             queue.add(qVertices[i]);
 
         }
-        //System.out.print("Cols "+graph.getNumOfColumns()+'\n');
-        //System.out.print("Rows "+graph.getNumOfRows()+'\n');
-        //System.out.print("Rows*Cols "+graph.getNumOfColumns()* graph.getNumOfRows()+'\n');
 
         while (!queue.isEmpty()) {
-            //System.out.print("Size "+queue.size()+'\n');
-
             QueueVertice nowChecked = queue.poll();
-            //System.out.print("Checking "+nowChecked.number+' '+nowChecked.pathTo+'\n');
-            //System.out.print("Down "+verticeList[nowChecked.number].weightDown);
-            //System.out.print(" Up "+verticeList[nowChecked.number].weightUp);
-            //System.out.print(" Left "+verticeList[nowChecked.number].weightLeft);
-            //System.out.print(" Right "+verticeList[nowChecked.number].weightRight+'\n');
+
             if (graph.getNeighbour(nowChecked.number, Direction.Up) != -1 && verticeList[nowChecked.number].weightUp != -1)
                 if (verticeList[nowChecked.number].weightUp + nowChecked.pathTo < pathValues[graph.getNeighbour(nowChecked.number, Direction.Up)]) {
                     //System.out.print("Size before"+queue.size()+'\n');
@@ -187,5 +178,9 @@ class GraphAnalyzer {
             if(vertex == false) cohesive = false;
         cohesionData.cohesive = cohesive;
         return cohesionData;
+    }
+
+    public static CohesionRef checkCohesion(Graph graph){
+        return checkCohesion(graph, 0);
     }
 }
