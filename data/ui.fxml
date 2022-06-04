@@ -1,53 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="743.0" prefWidth="1144.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="608.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jgrafy.HelloController">
   <tabs>
+    <Tab text="Graph View">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="601.0">
+               <children>
+                  <ScrollBar layoutX="580.0" layoutY="22.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="13.0" />
+                  <ScrollBar layoutX="14.0" layoutY="349.0" prefHeight="12.0" prefWidth="566.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
     <Tab text="Settings">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="401.0" prefWidth="600.0">
                <children>
-                  <Button layoutX="443.0" layoutY="67.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="195.0" text="Open graph from file" AnchorPane.bottomAnchor="562.0" AnchorPane.leftAnchor="443.0" AnchorPane.rightAnchor="506.0" AnchorPane.topAnchor="67.0">
+                  <Pane layoutX="6.0" layoutY="155.0" prefHeight="55.0" prefWidth="576.0" style="-fx-background-color: silver;" />
+                  <Pane layoutX="6.0" layoutY="80.0" prefHeight="55.0" prefWidth="576.0" style="-fx-background-color: silver;" />
+                  <Pane layoutX="6.0" layoutY="8.0" prefHeight="55.0" prefWidth="576.0" style="-fx-background-color: silver;" />
+                  <Pane layoutX="6.0" layoutY="227.0" prefHeight="175.0" prefWidth="147.0" style="-fx-background-color: silver;">
+                     <children>
+                        <Label layoutX="17.0" layoutY="10.0" prefHeight="31.0" prefWidth="175.0" text="Find shortest path">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="PathStart" layoutX="60.0" layoutY="48.0" prefHeight="25.0" prefWidth="66.0" text="10" />
+                        <Label layoutX="24.0" layoutY="53.0" text="Start" />
+                        <TextField fx:id="PathEnd" layoutX="60.0" layoutY="87.0" prefHeight="25.0" prefWidth="66.0" text="10" />
+                        <Label layoutX="29.0" layoutY="91.0" text="End" />
+                        <Button layoutX="60.0" layoutY="130.0" mnemonicParsing="false" onAction="#addPath" prefHeight="31.0" prefWidth="60.0" text="Find">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Button layoutX="485.0" layoutY="20.0" mnemonicParsing="false" onAction="#generateGraph" prefHeight="31.0" prefWidth="87.0" text="Generate">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <ChoiceBox layoutX="164.0" layoutY="247.0" prefWidth="150.0" AnchorPane.bottomAnchor="442.0" AnchorPane.leftAnchor="164.0" AnchorPane.rightAnchor="830.0" AnchorPane.topAnchor="247.0" />
-                  <Button layoutX="443.0" layoutY="217.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="209.0" text="Generate graph" AnchorPane.bottomAnchor="412.0" AnchorPane.leftAnchor="443.0" AnchorPane.rightAnchor="506.0" AnchorPane.topAnchor="217.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="151.0" layoutY="209.0" prefHeight="31.0" prefWidth="175.0" text="Type of generated graph:" AnchorPane.bottomAnchor="474.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="818.0" AnchorPane.topAnchor="209.0">
+                  <Label fx:id="CohesiveOutput" layoutX="220.0" layoutY="168.0" prefHeight="28.0" prefWidth="269.0" style="-fx-background-color: white;" text=" The graph &quot;.../mygraph&quot; is cohesive" textAlignment="CENTER">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Separator layoutX="-3.0" layoutY="173.0" prefHeight="19.0" prefWidth="1150.0" />
-                  <Button layoutX="810.0" layoutY="217.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="209.0" text="Choose file to save the generated graph to" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="412.0" AnchorPane.leftAnchor="810.0" AnchorPane.rightAnchor="139.0" AnchorPane.topAnchor="217.0">
+                  <Label layoutX="14.0" layoutY="20.0" prefHeight="31.0" prefWidth="73.0" text="Generator">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="20.0" layoutY="85.0" mnemonicParsing="false" onAction="#openGraph" prefHeight="45.0" prefWidth="174.0" text="Open graph from file">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Label layoutX="17.0" layoutY="72.0" prefHeight="46.0" prefWidth="415.0" text="The graph &quot;.../mygraph&quot; is cohesive" textAlignment="CENTER" AnchorPane.bottomAnchor="596.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="712.0" AnchorPane.topAnchor="72.0">
+                  <RadioButton layoutX="107.0" layoutY="27.0" mnemonicParsing="false" selected="true" text="Full">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="graphType" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton layoutX="165.0" layoutY="27.0" mnemonicParsing="false" text="Cohesive" toggleGroup="$graphType" />
+                  <RadioButton layoutX="245.0" layoutY="27.0" mnemonicParsing="false" text="Random" toggleGroup="$graphType" />
+                  <Label layoutX="331.0" layoutY="12.0" text="Columns" />
+                  <Label layoutX="406.0" layoutY="12.0" text="Rows" />
+                  <TextField fx:id="Columns" layoutX="320.0" layoutY="32.0" prefHeight="25.0" prefWidth="66.0" text="10" />
+                  <TextField fx:id="Rows" layoutX="401.0" layoutY="32.0" prefHeight="25.0" prefWidth="66.0" text="10" />
+                  <Button layoutX="210.0" layoutY="85.0" mnemonicParsing="false" onAction="#saveGraph" prefHeight="45.0" prefWidth="174.0" text="Save graph to file">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="20.0" layoutY="159.0" mnemonicParsing="false" onAction="#checkCohesion" prefHeight="45.0" prefWidth="174.0" text="Check cohesion">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Pane layoutX="180.0" layoutY="227.0" prefHeight="175.0" prefWidth="221.0" style="-fx-background-color: silver;">
+                     <children>
+                        <ListView layoutX="11.0" layoutY="35.0" prefHeight="133.0" prefWidth="200.0" />
+                        <Label layoutX="13.0" layoutY="14.0" prefHeight="21.0" prefWidth="196.0" text="Path List:" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Label fx:id="Status" alignment="CENTER" layoutX="403.0" layoutY="301.0" prefHeight="105.0" prefWidth="200.0" text="Everything is fine" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="426.0" layoutY="273.0" prefHeight="28.0" prefWidth="154.0" text="Status:" textAlignment="CENTER">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
                </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Graph View">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>
     </Tab>
   </tabs>

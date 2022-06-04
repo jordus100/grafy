@@ -1,8 +1,12 @@
 package com.example.jgrafy;
 
 
+import java.util.List;
+
 public class Main {
 
+    static private Graph graph;
+    static private List<Path> pathList;
     public static void main(String[] args) {
         /*try {
             Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\Jordu\\Documents\\Programming\\F1NextRace\\JGrafy\\data\\mygraph2");
@@ -29,6 +33,30 @@ public class Main {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
+    }
+    public static Graph getGraph()
+    {
+        return graph;
+    }
+
+    public static void setGraph(Graph newGraph)
+    {
+        graph=newGraph;
+    }
+
+    public static void addPath(Path path)
+    {
+        pathList.add(path);
+    }
+
+    public static void removePath(Path path)
+    {
+        pathList.remove(path);
+    }
+
+    public static List<Path> getPath()
+    {
+        return pathList;
     }
 
 }
