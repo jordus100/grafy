@@ -21,6 +21,9 @@ public class HelloController {
     private TextField PathStart;
     @FXML
     private TextField PathEnd;
+    @FXML
+    private TextField Root;
+    int root;
     int rows;
     int cols;
     int pStart;
@@ -39,7 +42,7 @@ public class HelloController {
             pEnd = Integer.parseInt(PathEnd.getText());
             if(0>pStart || 0>pEnd || pStart>numOfVertices || pEnd>numOfVertices)
             {
-                Status.setText("Use numbers from range\n0 to "+numOfVertices);
+                Status.setText("Enter numbers from \nrange 0 to "+numOfVertices);
             }
             else
             {
@@ -78,12 +81,24 @@ public class HelloController {
     public void checkCohesion(javafx.event.ActionEvent actionEvent) {
         try
         {
-            if(GraphAnalyzer.checkCohesion(Main.getGraph(),0).cohesive)
-                CohesiveOutput.setText("Your graph is cohesive");
-            else
-                CohesiveOutput.setText("Your graph is not cohesive");
+            root=Integer.parseInt(Root.getText());
+            int numOfVertices=Main.getGraph().getNumOfColumns()*Main.getGraph().getNumOfRows()-1;
+            if(root>-1 && root<numOfVertices+1) {
+                if (GraphAnalyzer.checkCohesion(Main.getGraph(), root).cohesive)
+                    CohesiveOutput.setText("Your graph is cohesive");
+                else
+                    CohesiveOutput.setText("Your graph is not cohesive");
 
-            Status.setText("Cohesion checked");
+                Status.setText("Cohesion checked");
+            }
+            else
+            {
+                Status.setText("Enter number from \nrange 0 to "+numOfVertices);
+            }
+        }
+        catch(NumberFormatException exception)
+        {
+            Status.setText("Use only natural \nnumbers in root");
         }
         catch(NullPointerException exception)
         {
