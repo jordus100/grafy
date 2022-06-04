@@ -1,6 +1,7 @@
 package com.example.jgrafy;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -46,6 +47,10 @@ public class Main {
 
     public static void addPath(Path path)
     {
+        if(pathList.size()==0)
+        {
+            pathList=new ArrayList<>();
+        }
         pathList.add(path);
     }
 

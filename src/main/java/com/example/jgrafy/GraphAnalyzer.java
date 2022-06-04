@@ -117,15 +117,15 @@ class GraphAnalyzer {
         }
         path.verticesInOrder = swap;
 
-        System.out.print("\nWartosc drogi: ");
-        System.out.print(path.pathValue);
-        System.out.print("\nWierzchołki: ");
+        //System.out.print("\nWartosc drogi: ");
+        //System.out.print(path.pathValue);
+        //System.out.print("\nWierzchołki: ");
         for (int i = 0; i < count; i++) {
-            System.out.print(swap[i] + " ");
+            //System.out.print(swap[i] + " ");
         }
-        System.out.print("\nWartość kroków: ");
+        //System.out.print("\nWartość kroków: ");
         for (int i = 1; i < count; i++) {
-            System.out.print(pathValues[path.verticesInOrder[i]] - pathValues[path.verticesInOrder[i - 1]] + " ");
+            //System.out.print(pathValues[path.verticesInOrder[i]] - pathValues[path.verticesInOrder[i - 1]] + " ");
             path.stepsValue[i] = pathValues[path.verticesInOrder[i]] - pathValues[path.verticesInOrder[i - 1]];
         }
 

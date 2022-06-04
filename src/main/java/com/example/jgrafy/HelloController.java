@@ -3,6 +3,7 @@ package com.example.jgrafy;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class HelloController {
     int pStart;
     int pEnd;
     @FXML
-    private Label welcomeText;
+    private RadioButton GenerateFull,GenerateRandom,GenerateCohesive;
 
 
 
@@ -49,8 +50,10 @@ public class HelloController {
                 }
                 else
                 {
-                    Status.setText("New Path Added \nfrom " + pStart + " to " + pEnd);
+                    Status.setText("New Path Added \nfrom " + pStart + " to " + pEnd+"\nvalue "+path.pathValue);
+                    //System.out.println("TERaz");
                     //Main.addPath(path);
+
                 }
             }
 
@@ -63,33 +66,87 @@ public class HelloController {
         {
             Status.setText("Generate/Read graph first");
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
+            Status.setText("Unknown error");
             System.out.println(exception);
         }
-        //System.out.println();
 
 
     }
 
     public void checkCohesion(javafx.event.ActionEvent actionEvent) {
-        System.out.println("Cohesion");
-        System.out.println("Cohesive? "+GraphAnalyzer.checkCohesion(Main.getGraph(),0).cohesive);
+        try
+        {
+            if(GraphAnalyzer.checkCohesion(Main.getGraph(),0).cohesive)
+                CohesiveOutput.setText("Your graph is cohesive");
+            else
+                CohesiveOutput.setText("Your graph is not cohesive");
+
+            Status.setText("Cohesion checked");
+        }
+        catch(NullPointerException exception)
+        {
+            Status.setText("Generate/Read graph first");
+        }
+        catch(Exception exception)
+        {
+            Status.setText("Unknown error");
+            System.out.println(exception);
+        }
     }
 
     public void openGraph(ActionEvent actionEvent) {
-        System.out.println("OpenGraph");
         //setGraph(GraphGenerator.readGraphFromFile(""));
+        Status.setText("Graph opened");
     }
 
     public void generateGraph(ActionEvent actionEvent) {
-        System.out.println("Generacja");
-        Main.setGraph(GraphGenerator.generateCohesiveGraph(10,10));
+        try {
+            rows=Integer.parseInt(Rows.getText());
+            cols=Integer.parseInt(Columns.getText());
+            if(rows>0 && cols>0) {
+                if (GenerateFull.isSelected()) {
+                    Main.setGraph(GraphGenerator.generateCohesiveGraph(rows, cols));
+                    Status.setText("Full graph generated");
+                } else if (GenerateCohesive.isSelected()) {
+                    Main.setGraph(GraphGenerator.generateCohesiveRandomGraph(rows, cols));
+                    Status.setText("Cohesive graph generated");
+                } else if (GenerateRandom.isSelected()) {
+                    Main.setGraph(GraphGenerator.generateRandomGraph(rows, cols));
+                    Status.setText("Random graph generated");
+                } else {
+                    Status.setText("Unknown error\nno radio button selected");
+                }
+            }
+            else Status.setText("Use only natural numbers\nin columns and rows");
+        }
+        catch (NumberFormatException exception)
+        {
+            Status.setText("Use only natural numbers\nin columns and rows");
+        }
+        catch (Exception exception)
+        {
+            Status.setText("Unknown error");
+            System.out.println(exception);
+        }
     }
 
     public void saveGraph(ActionEvent actionEvent) throws IOException {
-        System.out.println("Zapis");
-        Main.getGraph().saveToFile("nowyGraf.txt");
+        try
+        {
+            Main.getGraph().saveToFile("nowyGraf.txt");
+            Status.setText("Graph saved");
+        }
+        catch(NullPointerException exception)
+        {
+            Status.setText("Generate/Read graph first");
+        }
+        catch(Exception exception)
+        {
+            Status.setText("Unknown error");
+            System.out.println(exception);
+        }
     }
 
 }
