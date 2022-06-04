@@ -32,7 +32,14 @@ public class HelloController {
     private RadioButton GenerateFull,GenerateRandom,GenerateCohesive;
 
 
-
+    public void PlusClicked(javafx.event.ActionEvent actionEvent)
+    {
+        System.out.println("Plus Clicked");
+    }
+    public void MinusClicked(javafx.event.ActionEvent actionEvent)
+    {
+        System.out.println("Minus Clicked");
+    }
     public void addPath(javafx.event.ActionEvent actionEvent)
     {
         try
