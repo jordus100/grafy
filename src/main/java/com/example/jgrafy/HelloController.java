@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 
 import java.io.IOException;
 
@@ -23,6 +26,14 @@ public class HelloController {
     private TextField PathEnd;
     @FXML
     private TextField Root;
+    @FXML
+    private Pane generatorPane;
+    @FXML
+    private Pane openSavePane;
+    @FXML
+    private Pane cohesionPane;
+    @FXML
+    private HBox pathHbox;
     int root;
     int rows;
     int cols;
@@ -31,7 +42,11 @@ public class HelloController {
     @FXML
     private RadioButton GenerateFull,GenerateRandom,GenerateCohesive;
 
-
+    public void initialize(){
+        ((HBox)(generatorPane.getChildren().get(0))).prefWidthProperty().bind(generatorPane.widthProperty());
+        ((HBox)(openSavePane.getChildren().get(0))).prefWidthProperty().bind(openSavePane.widthProperty());
+        ((HBox)(cohesionPane.getChildren().get(0))).prefWidthProperty().bind(cohesionPane.widthProperty());
+    }
     public void PlusClicked(javafx.event.ActionEvent actionEvent)
     {
         System.out.println("Plus Clicked");
@@ -120,7 +135,8 @@ public class HelloController {
 
     public void openGraph(ActionEvent actionEvent) {
         //setGraph(GraphGenerator.readGraphFromFile(""));
-        Status.setText("Graph opened");
+        //
+        // Status.setText(generatorHbox.getWidth() + "");
     }
 
     public void generateGraph(ActionEvent actionEvent) {

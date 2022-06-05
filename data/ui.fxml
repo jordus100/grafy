@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -12,7 +13,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
@@ -43,100 +46,151 @@
     </Tab>
     <Tab text="Settings">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="401.0" prefWidth="600.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="813.0">
                <children>
-                  <Pane layoutX="6.0" layoutY="155.0" prefHeight="55.0" prefWidth="594.0" style="-fx-background-color: silver;">
+                  <Pane fx:id="cohesionPane" layoutX="6.0" layoutY="155.0" prefHeight="55.0" prefWidth="594.0" style="-fx-background-color: silver;" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="155.0">
                      <children>
-                        <Label fx:id="CohesiveOutput" alignment="CENTER" layoutX="311.0" layoutY="14.0" prefHeight="28.0" prefWidth="269.0" style="-fx-background-color: white;" text="Find out if your graph is cohesive" textAlignment="CENTER">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="123.0" layoutY="5.0" mnemonicParsing="false" onAction="#checkCohesion" prefHeight="45.0" prefWidth="174.0" text="Check cohesion">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
-                        <TextField fx:id="Root" layoutX="47.0" layoutY="16.0" prefHeight="25.0" prefWidth="66.0" text="0" />
-                        <Label layoutX="14.0" layoutY="20.0" text="Root" />
+                        <HBox prefHeight="58.0" prefWidth="593.0" spacing="10.0">
+                           <children>
+                              <Label fx:id="CohesiveOutput" alignment="CENTER" minWidth="230.0" prefHeight="36.0" prefWidth="10000.0" style="-fx-background-color: white;" text="Find out if your graph is cohesive" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Button minWidth="180.0" mnemonicParsing="false" onAction="#checkCohesion" prefHeight="55.0" prefWidth="10000.0" text="Check cohesion">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </HBox>
                      </children></Pane>
-                  <Pane layoutX="6.0" layoutY="80.0" prefHeight="55.0" prefWidth="593.0" style="-fx-background-color: silver;" />
-                  <Pane layoutX="8.0" layoutY="8.0" prefHeight="55.0" prefWidth="592.0" style="-fx-background-color: silver;">
+                  <Pane fx:id="openSavePane" layoutX="6.0" layoutY="80.0" prefHeight="55.0" prefWidth="593.0" style="-fx-background-color: silver;" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="80.0">
                      <children>
-                        <RadioButton fx:id="GenerateCohesive" layoutX="158.0" layoutY="20.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="74.0" text="Cohesive">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="graphType" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="GenerateFull" layoutX="94.0" layoutY="21.0" mnemonicParsing="false" selected="true" text="Full" toggleGroup="$graphType" />
-                        <Button layoutX="491.0" layoutY="12.0" mnemonicParsing="false" onAction="#generateGraph" prefHeight="31.0" prefWidth="87.0" text="Generate">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
-                        <TextField fx:id="Rows" layoutX="417.0" layoutY="25.0" prefHeight="25.0" prefWidth="66.0" text="10" />
-                        <Label layoutX="417.0" layoutY="6.0" text="Rows" />
-                        <TextField fx:id="Columns" layoutX="336.0" layoutY="25.0" prefHeight="25.0" prefWidth="66.0" text="10" />
-                        <Label layoutX="336.0" layoutY="6.0" text="Columns" />
-                        <RadioButton fx:id="GenerateRandom" layoutX="247.0" layoutY="21.0" mnemonicParsing="false" text="Random" toggleGroup="$graphType" />
+                        <HBox prefHeight="53.0" prefWidth="595.0" spacing="20.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#openGraph" prefHeight="60.0" prefWidth="10000.0" text="Open graph from file">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#saveGraph" prefHeight="60.0" prefWidth="10000.0" text="Save graph to file">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
                      </children></Pane>
-                  <Pane layoutX="6.0" layoutY="227.0" prefHeight="175.0" prefWidth="147.0" style="-fx-background-color: silver;">
+                  <Pane fx:id="generatorPane" layoutX="8.0" layoutY="8.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="55.0" prefWidth="592.0" style="-fx-background-color: silver;" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
                      <children>
-                        <Label layoutX="17.0" layoutY="10.0" prefHeight="31.0" prefWidth="175.0" text="Find shortest path">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="PathStart" layoutX="60.0" layoutY="48.0" prefHeight="25.0" prefWidth="66.0" text="10" />
-                        <Label layoutX="24.0" layoutY="53.0" text="Start" />
-                        <TextField fx:id="PathEnd" layoutX="60.0" layoutY="87.0" prefHeight="25.0" prefWidth="66.0" text="10" />
-                        <Label layoutX="29.0" layoutY="91.0" text="End" />
-                        <Button layoutX="60.0" layoutY="130.0" mnemonicParsing="false" onAction="#addPath" prefHeight="31.0" prefWidth="60.0" text="Find">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
-                  <Label layoutX="14.0" layoutY="20.0" prefHeight="31.0" prefWidth="73.0" text="Generator">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Button layoutX="20.0" layoutY="85.0" mnemonicParsing="false" onAction="#openGraph" prefHeight="45.0" prefWidth="174.0" text="Open graph from file">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="210.0" layoutY="85.0" mnemonicParsing="false" onAction="#saveGraph" prefHeight="45.0" prefWidth="174.0" text="Save graph to file">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Pane layoutX="168.0" layoutY="227.0" prefHeight="175.0" prefWidth="221.0" style="-fx-background-color: silver;">
+                        <HBox fx:id="hbox" prefWidth="592.0" spacing="5.0">
+                           <children>
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="54.0" minWidth="73.0" prefHeight="54.0" prefWidth="10000.0" text="Generator" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <RadioButton fx:id="GenerateFull" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="10000.0" selected="true" text="Full">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="graphType" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="GenerateCohesive" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="77.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="10000.0" text="Cohesive" toggleGroup="$graphType" />
+                              <RadioButton fx:id="GenerateRandom" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="74.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="10000.0" text="Random" toggleGroup="$graphType" />
+                              <TextField fx:id="Rows" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="45.0" prefHeight="54.0" prefWidth="10000.0" text="10" />
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="57.0" prefHeight="54.0" prefWidth="10000.0" text="Columns" textAlignment="RIGHT" />
+                              <TextField fx:id="Columns" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="37.0" prefHeight="54.0" prefWidth="10000.0" text="10" />
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="30.0" prefHeight="54.0" prefWidth="10000.0" text="Rows" textAlignment="RIGHT">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin></Label>
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="90.0" mnemonicParsing="false" onAction="#generateGraph" prefHeight="54.0" prefWidth="10000.0" text="Generate">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </HBox>
+                     </children></Pane>
+                  <HBox fx:id="pathHbox" layoutY="215.0" prefHeight="180.0" prefWidth="608.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="215.0">
                      <children>
-                        <Label layoutX="13.0" layoutY="14.0" prefHeight="21.0" prefWidth="196.0" text="Path List:" textAlignment="CENTER">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <ListView layoutX="11.0" layoutY="35.0" prefHeight="134.0" prefWidth="200.0" />
+                        <Pane prefHeight="175.0" prefWidth="10000.0" style="-fx-background-color: silver;">
+                           <children>
+                              <VBox prefHeight="177.0" prefWidth="189.0" spacing="5.0">
+                                 <children>
+                                    <Label prefHeight="10000.0" prefWidth="175.0" text="Find shortest path">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" prefHeight="10000.0" prefWidth="62.0" text="Start" textAlignment="CENTER">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets right="30.0" />
+                                       </padding>
+                                    </Label>
+                                    <TextField fx:id="PathStart" prefHeight="10000.0" prefWidth="66.0" text="10" />
+                                    <Label prefHeight="10000.0" prefWidth="44.0" text="End" />
+                                    <TextField fx:id="PathEnd" prefHeight="10000.0" prefWidth="66.0" text="10" />
+                                    <Button mnemonicParsing="false" onAction="#addPath" prefHeight="10000.0" prefWidth="144.0" text="Find">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                        <Pane minWidth="230.0" prefHeight="175.0" prefWidth="10000.0" style="-fx-background-color: silver;">
+                           <children>
+                              <Label layoutX="13.0" layoutY="14.0" prefHeight="21.0" prefWidth="196.0" text="Path List:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <ListView layoutX="11.0" layoutY="35.0" prefHeight="134.0" prefWidth="200.0" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="175.0" prefWidth="10000.0" style="-fx-background-color: silver;">
+                           <children>
+                              <Label layoutX="7.0" layoutY="7.0" prefHeight="28.0" prefWidth="154.0" text="Status:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Status" alignment="CENTER" layoutY="35.0" prefHeight="134.0" prefWidth="185.0" style="-fx-background-color: black; -fx-text-fill: white;" text=" Everything is fine" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
                      </children>
-                  </Pane>
-                  <Pane layoutX="401.0" layoutY="227.0" prefHeight="175.0" prefWidth="199.0" style="-fx-background-color: silver;">
-                     <children>
-                        <Label layoutX="7.0" layoutY="7.0" prefHeight="28.0" prefWidth="154.0" text="Status:" textAlignment="CENTER">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="Status" alignment="CENTER" layoutX="7.0" layoutY="35.0" prefHeight="134.0" prefWidth="185.0" style="-fx-background-color: black; -fx-text-fill: white;" text=" Everything is fine" textAlignment="CENTER">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
+                     <padding>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
                </children></AnchorPane>
       </content>
     </Tab>

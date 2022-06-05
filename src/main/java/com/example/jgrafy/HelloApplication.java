@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
         stage.getIcons().add(icon);
 
         stage.setFullScreen(false);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
