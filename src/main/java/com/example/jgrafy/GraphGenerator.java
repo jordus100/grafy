@@ -87,17 +87,17 @@ class GraphGenerator {
                 j=i;
                 System.out.print(GraphAnalyzer.checkCohesion(graph,0).explored[i]);
                 if(GraphAnalyzer.checkCohesion(graph,0).explored[i]==false) {
-                    System.out.print("\nNiespojny "+j);
+                    //System.out.print("\nNiespojny "+j);
                     break;
                 }
             }
             if(graph.getNeighbour(j,Direction.Up)!=-1) {
-                System.out.print("\n HERE ");
+                //System.out.print("\n HERE ");
                 graph.setVertice(j, Direction.Up, random());
             }
             if(graph.getNeighbour(j,Direction.Left)!=-1) {
                 graph.setVertice(j, Direction.Left, random());
-                System.out.print("\n HERE ");
+                //System.out.print("\n HERE ");
             }
         }
         return graph;
