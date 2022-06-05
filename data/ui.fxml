@@ -25,18 +25,18 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="601.0">
                <children>
-                  <ImageView fitHeight="29.0" fitWidth="31.0" layoutX="42.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="29.0" fitWidth="31.0" layoutX="42.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="41.563106536865234">
                      <image>
                         <Image url="@Lupa.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="Plus" layoutX="72.0" layoutY="368.0" mnemonicParsing="false" onAction="#PlusClicked" prefHeight="28.0" prefWidth="28.0" text="+" />
-                  <Button fx:id="Minus" layoutX="14.0" layoutY="368.0" mnemonicParsing="false" onAction="#MinusClicked" prefHeight="28.0" prefWidth="28.0" text="-" />
-                  <ScrollPane layoutX="8.0" layoutY="8.0" prefHeight="347.0" prefWidth="590.0">
+                  <Button fx:id="Plus" layoutX="72.0" layoutY="368.0" mnemonicParsing="false" onAction="#PlusClicked" prefHeight="28.0" prefWidth="28.0" text="+" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="72.0" />
+                  <Button fx:id="Minus" layoutX="14.0" layoutY="368.0" mnemonicParsing="false" onAction="#MinusClicked" prefHeight="28.0" prefWidth="28.0" text="-" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="14.0" />
+                  <ScrollPane layoutX="8.0" layoutY="8.0" prefHeight="335.0" prefWidth="581.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="8.0">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="769.0" prefWidth="999.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="638.0" prefWidth="882.0">
                            <children>
-                              <Polygon fill="DODGERBLUE" layoutX="255.0" layoutY="243.0" points="-71.0, 176.0, 577.0, 381.0, 152.0, -232.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Polygon fill="DODGERBLUE" layoutX="246.0" layoutY="232.0" points="-71.0, 176.0, 577.0, 381.0, 152.0, -232.0" stroke="BLACK" strokeType="INSIDE" />
                            </children>
                         </AnchorPane>
                      </content>

@@ -32,8 +32,6 @@ public class HelloController {
     private Pane openSavePane;
     @FXML
     private Pane cohesionPane;
-    @FXML
-    private HBox pathHbox;
     int root;
     int rows;
     int cols;
