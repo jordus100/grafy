@@ -50,7 +50,7 @@ abstract class GraphGenerator {
     }
 
     public static double random() {
-        double rand = new Random().nextFloat()+0.00000000000000001;
+        double rand = new Random().nextFloat() + 0.00000000000000001;
         return rand;
     }
 
@@ -69,6 +69,7 @@ abstract class GraphGenerator {
         }
         return graph;
     }
+
 
     public static Graph generateCohesiveGraph(int numberOfRows, int numberOfColumns) {
         Graph graph = new Graph(numberOfRows, numberOfColumns);
@@ -103,25 +104,32 @@ abstract class GraphGenerator {
 
             for (int i = 0; i < numberOfRows * numberOfColumns; i++) {
                 j = i;
-                System.out.print(GraphAnalyzer.checkCohesion(graph, 0).explored[i]);
+                //System.out.print(GraphAnalyzer.checkCohesion(graph, 0).explored[i]);
                 if (GraphAnalyzer.checkCohesion(graph, 0).explored[i] == false) {
-                    System.out.print("\nNiespojny " + j);
+                    //System.out.print("\nNiespojny " + j);
                     break;
                 }
             }
             if (graph.getNeighbour(j, Direction.Up) != -1) {
-                System.out.print("\n HERE ");
+                //System.out.print("\n HERE ");
                 graph.setVertice(j, Direction.Up, random());
-                graph.setVertice(graph.getNeighbour(j,Direction.Up), Direction.Down, random());
+                graph.setVertice(graph.getNeighbour(j, Direction.Up), Direction.Down, random());
             }
             if (graph.getNeighbour(j, Direction.Left) != -1) {
                 graph.setVertice(j, Direction.Left, random());
-                graph.setVertice(graph.getNeighbour(j,Direction.Left), Direction.Right, random());
-
+                graph.setVertice(graph.getNeighbour(j, Direction.Left), Direction.Right, random());
             }
         }
         return graph;
     }
+
+
+
+
+
+
+
         public abstract Graph generateGraph(int numOfRows, int numOfCols);
+
 
 }
