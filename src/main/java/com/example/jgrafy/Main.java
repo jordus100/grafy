@@ -1,13 +1,8 @@
 package com.example.jgrafy;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
 
-    static private Graph graph;
-    static private List<Path> pathList;
     public static void main(String[] args) {
         /*try {
             Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\Jordu\\Documents\\Programming\\F1NextRace\\JGrafy\\data\\mygraph2");
@@ -27,41 +22,13 @@ public class Main {
         }*/
         try {
            // Graph graph = GraphGenerator.readGraphFromFile("C:\\Users\\posia\\Desktop\\JIMP2\\test2.txt");
-            Graph graph =GraphGenerator.generateCohesiveGraph(15,15);
+            Graph graph =GraphGenerator.generateCohesiveGraph(5,5);
             System.out.print("Wczytano \n");
             GraphAnalyzer.findShortestPath(224,0,graph);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-    }
-    public static Graph getGraph()
-    {
-        return graph;
-    }
-
-    public static void setGraph(Graph newGraph)
-    {
-        graph=newGraph;
-    }
-
-    public static void addPath(Path path)
-    {
-        if(pathList.size()==0)
-        {
-            pathList=new ArrayList<>();
-        }
-        pathList.add(path);
-    }
-
-    public static void removePath(Path path)
-    {
-        pathList.remove(path);
-    }
-
-    public static List<Path> getPath()
-    {
-        return pathList;
     }
 
 }
