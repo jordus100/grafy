@@ -7,6 +7,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
@@ -65,8 +66,9 @@ public class UISettingsController {
                 else
                 {
                     Status.setText("New Path Added \nfrom " + pStart + " to " + pEnd+"\nvalue "+path.pathValue);
-                    //System.out.println("TERaz");
-                    //Main.addPath(path);
+                    System.out.println("TERaz");
+                    path.color = Color.GREEN;
+                    Main.addPath(path);
 
                 }
             }

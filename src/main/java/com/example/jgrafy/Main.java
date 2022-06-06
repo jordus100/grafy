@@ -50,7 +50,7 @@ public class Main {
 
     public static void addPath(Path path)
     {
-        if(pathList.size()==0)
+        if(pathList == null)
         {
             pathList=new ArrayList<>();
         }
