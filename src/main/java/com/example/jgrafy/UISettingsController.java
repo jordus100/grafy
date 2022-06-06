@@ -92,20 +92,16 @@ public class UISettingsController {
     public void checkCohesion(javafx.event.ActionEvent actionEvent) {
         try
         {
-            root=Integer.parseInt(Root.getText());
-            int numOfVertices=Main.getGraph().getNumOfColumns()*Main.getGraph().getNumOfRows()-1;
-            if(root>-1 && root<numOfVertices+1) {
+            root=0;
+
                 if (GraphAnalyzer.checkCohesion(Main.getGraph(), root).cohesive)
                     CohesiveOutput.setText("Your graph is cohesive");
                 else
                     CohesiveOutput.setText("Your graph is not cohesive");
 
                 Status.setText("Cohesion checked");
-            }
-            else
-            {
-                Status.setText("Enter number from \nrange 0 to "+numOfVertices);
-            }
+
+
         }
         catch(NumberFormatException exception)
         {
