@@ -7,11 +7,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 
 import java.io.IOException;
 
-public class HelloController {
+public class UISettingsController {
     @FXML
     private Label Status;
     @FXML

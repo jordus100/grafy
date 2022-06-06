@@ -1,18 +1,28 @@
 package com.example.jgrafy;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Application extends javafx.application.Application {
+
+    public static Parent getRoot() {
+        return root;
+    }
+
+    private static Parent root;
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/ui.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),  Color.LIGHTSTEELBLUE);
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/ui.fxml"));
+        root = fxmlLoader.load();
+        Scene scene = new Scene(root,  Color.LIGHTSTEELBLUE);
         stage.setTitle("JGrafy");
         stage.setX(50);
         stage.setY(50);
