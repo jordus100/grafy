@@ -28,50 +28,6 @@ public class UIGraphViewController {
         graphPane.prefHeightProperty().bind(graphScroll.heightProperty());
     }
 
-    public void drawGraph(Graph graph, AnchorPane graphPane, Path[] paths){
-        double vertexRadius;
-        double scrollbarWidth = 15;
-        double graphPaneWidth = graphPane.getWidth() - scrollbarWidth;
-        double graphPaneHeight = graphPane.getHeight() - scrollbarWidth;
-        if(graphPane.getWidth() / graphPane.getHeight() < graph.getNumOfColumns() / graph.getNumOfRows()){
-            vertexRadius = graphPaneWidth / graph.getNumOfColumns() / 4;
-        } else{
-            vertexRadius = graphPaneHeight / graph.getNumOfRows() / 4;
-        }
-        for(int i = 0; i<graph.getNumOfRows(); i++){
-            for(int n = 0; n< graph.getNumOfColumns(); n++){
-                Circle vertexCircle = new Circle(vertexRadius);
-                double circleX = graphPane.getLayoutX() + n * vertexRadius * 4 + vertexRadius;
-                double circleY = graphPane.getLayoutY() + i * vertexRadius * 4 + vertexRadius;
-                vertexCircle.setCenterX(circleX);
-                vertexCircle.setCenterY(circleY);
-                vertexCircle.setFill(Paint.valueOf("Black"));
-
-                Label vertexNumLabel = new Label(i*graph.getNumOfColumns() + n + "");
-                vertexNumLabel.setLayoutX(circleX - vertexRadius/4);
-                vertexNumLabel.setLayoutY(circleY - vertexRadius/4);
-                vertexNumLabel.setFont(Font.font("System", vertexRadius/1.5 / (vertexNumLabel.getText().length() + 1) * 2.5));
-                vertexNumLabel.setTextFill(Paint.valueOf("White"));
-
-                for(Direction direction : Direction.values()){
-                    int neighbor = graph.getNeighbour((i*graph.getNumOfColumns() + n), direction);
-                    if(neighbor >= 0){
-                        if(direction == Direction.Right && graph.getVertices()[neighbor].weightRight >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightRight);
-                        if(direction == Direction.Left && graph.getVertices()[neighbor].weightLeft >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightLeft);
-                        if(direction == Direction.Up && graph.getVertices()[neighbor].weightUp >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightUp);
-                        if(direction == Direction.Down && graph.getVertices()[neighbor].weightDown >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightDown);
-                    }
-                }
-                graphPane.getChildren().add(vertexCircle);
-                graphPane.getChildren().add(vertexNumLabel);
-            }
-        }
-    }
-
     private void addArrow(AnchorPane graphPane, double circleX, double circleY, double radius, Direction direction, double weight, Color color){
         Line arrowBody = null;
         Polygon arrowPoint = null;
@@ -116,10 +72,63 @@ public class UIGraphViewController {
         }
         weightLabel.setTextFill(Paint.valueOf("red"));
         arrowBody.setFill(color);
+        arrowPoint.setFill(color);
         graphPane.getChildren().add(arrowBody);
         graphPane.getChildren().add(arrowPoint);
         graphPane.getChildren().add(weightLabel);
     }
+
+    public void drawGraph(Graph graph, AnchorPane graphPane, Path[] paths){
+        double vertexRadius;
+        double scrollbarWidth = 15;
+        double graphPaneWidth = graphPane.getWidth() - scrollbarWidth;
+        double graphPaneHeight = graphPane.getHeight() - scrollbarWidth;
+        if(graphPane.getWidth() / graphPane.getHeight() < graph.getNumOfColumns() / graph.getNumOfRows()){
+            vertexRadius = graphPaneWidth / graph.getNumOfColumns() / 4;
+        } else{
+            vertexRadius = graphPaneHeight / graph.getNumOfRows() / 4;
+        }
+        for(int i = 0; i<graph.getNumOfRows(); i++){
+            for(int n = 0; n< graph.getNumOfColumns(); n++){
+                Circle vertexCircle = new Circle(vertexRadius);
+                double circleX = graphPane.getLayoutX() + n * vertexRadius * 4 + vertexRadius;
+                double circleY = graphPane.getLayoutY() + i * vertexRadius * 4 + vertexRadius;
+                vertexCircle.setCenterX(circleX);
+                vertexCircle.setCenterY(circleY);
+                vertexCircle.setFill(Paint.valueOf("Black"));
+
+                Label vertexNumLabel = new Label(i*graph.getNumOfColumns() + n + "");
+                vertexNumLabel.setLayoutX(circleX - vertexRadius/4);
+                vertexNumLabel.setLayoutY(circleY - vertexRadius/4);
+                vertexNumLabel.setFont(Font.font("System", vertexRadius/1.5 / (vertexNumLabel.getText().length() + 1) * 2.5));
+                vertexNumLabel.setTextFill(Paint.valueOf("White"));
+
+                for(Direction direction : Direction.values()){
+                    int neighbor = graph.getNeighbour((i*graph.getNumOfColumns() + n), direction);
+                    Color pathColor = Color.BLACK;
+                    for(Path path : paths) {
+                        for(int x = 0; x<path.verticesInOrder.length; x++)
+                            if(path.verticesInOrder[x] == i*graph.getNumOfColumns() + n && path.verticesInOrder[x+1] == neighbor)
+                                pathColor = path.color;
+                    }
+                    if(neighbor >= 0){
+                        if(direction == Direction.Right && graph.getVertices()[neighbor].weightRight >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightRight, pathColor);
+                        if(direction == Direction.Left && graph.getVertices()[neighbor].weightLeft >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightLeft, pathColor);
+                        if(direction == Direction.Up && graph.getVertices()[neighbor].weightUp >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightUp, pathColor);
+                        if(direction == Direction.Down && graph.getVertices()[neighbor].weightDown >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightDown, pathColor);
+                    }
+                }
+                graphPane.getChildren().add(vertexCircle);
+                graphPane.getChildren().add(vertexNumLabel);
+            }
+        }
+    }
+
+
 
     public void MinusClicked(ActionEvent actionEvent) {
         drawGraph(Main.getGraph(), graphPane, null);
