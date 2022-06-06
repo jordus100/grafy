@@ -44,14 +44,6 @@ public class UISettingsController {
         ((HBox)(openSavePane.getChildren().get(0))).prefWidthProperty().bind(openSavePane.widthProperty());
         ((HBox)(cohesionPane.getChildren().get(0))).prefWidthProperty().bind(cohesionPane.widthProperty());
     }
-    public void PlusClicked(javafx.event.ActionEvent actionEvent)
-    {
-        System.out.println("Plus Clicked");
-    }
-    public void MinusClicked(javafx.event.ActionEvent actionEvent)
-    {
-        System.out.println("Minus Clicked");
-    }
     public void addPath(javafx.event.ActionEvent actionEvent)
     {
         try

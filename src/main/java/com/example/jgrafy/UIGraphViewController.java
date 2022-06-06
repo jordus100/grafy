@@ -40,7 +40,7 @@ public class UIGraphViewController {
                     arrowBody.getEndX(), arrowBody.getEndY(),
                     arrowBody.getEndX() - radius*0.5, arrowBody.getEndY() + 0.25*radius);
             weightLabel.setLayoutX(arrowBody.getStartX());
-            weightLabel.setLayoutY(arrowBody.getStartY() - weightLabel.getFont().getSize() - 5);
+            weightLabel.setLayoutY(arrowBody.getStartY() - weightLabel.getFont().getSize() * 1.5);
         }
         if(direction == Direction.Left){
             arrowBody = new Line(circleX - radius, circleY + 0.25*radius, circleX - 3*radius, circleY + 0.25*radius);
@@ -81,9 +81,9 @@ public class UIGraphViewController {
     public void drawGraph(Graph graph, AnchorPane graphPane, Path[] paths){
         double vertexRadius;
         double scrollbarWidth = 15;
-        double graphPaneWidth = graphPane.getWidth() - scrollbarWidth;
-        double graphPaneHeight = graphPane.getHeight() - scrollbarWidth;
-        if(graphPane.getWidth() / graphPane.getHeight() < graph.getNumOfColumns() / graph.getNumOfRows()){
+        double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;
+        double graphPaneHeight = graphPane.getPrefHeight() - scrollbarWidth;
+        if(graphPane.getPrefWidth() / graphPane.getPrefHeight() < graph.getNumOfColumns() / graph.getNumOfRows()){
             vertexRadius = graphPaneWidth / graph.getNumOfColumns() / 4;
         } else{
             vertexRadius = graphPaneHeight / graph.getNumOfRows() / 4;
@@ -131,10 +131,27 @@ public class UIGraphViewController {
 
 
     public void MinusClicked(ActionEvent actionEvent) {
-        drawGraph(Main.getGraph(), graphPane, null);
+        graphPane.prefWidthProperty().unbind();
+        graphPane.prefHeightProperty().unbind();
+        graphPane.getChildren().clear();
+        graphPane.setPrefWidth(graphPane.getPrefWidth() / 1.5);
+        graphPane.setPrefHeight(graphPane.getPrefHeight() / 1.5);
+        drawGraph(Main.getGraph(), graphPane, new Path[0]);
     }
 
     public void PlusClicked(ActionEvent actionEvent) {
+        graphPane.prefWidthProperty().unbind();
+        graphPane.prefHeightProperty().unbind();
+        graphPane.getChildren().clear();
+        graphPane.setPrefWidth(graphPane.getPrefWidth() * 1.5);
+        graphPane.setPrefHeight(graphPane.getPrefHeight() * 1.5);
+        drawGraph(Main.getGraph(), graphPane, new Path[0]);
+    }
 
+    public void DisplayClicked(ActionEvent actionEvent){
+        graphPane.prefWidthProperty().bind(graphScroll.widthProperty());
+        graphPane.prefHeightProperty().bind(graphScroll.heightProperty());
+        graphPane.getChildren().clear();
+        drawGraph(Main.getGraph(), graphPane, new Path[0]);
     }
 }
