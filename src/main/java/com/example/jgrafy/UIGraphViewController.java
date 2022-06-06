@@ -22,22 +22,24 @@ public class UIGraphViewController {
 
 
     public void MinusClicked(ActionEvent actionEvent) {
-        System.out.println(graphPane.prefWidthProperty());
-        System.out.println(graphPane.getWidth());
         Graph graph = Main.getGraph();
-        int biggerDimension = graph.getNumOfColumns() > graph.getNumOfRows() ? graph.getNumOfColumns() : graph.getNumOfRows();
-        double vertexRadiusGuess = graphPane.getWidth() < graphPane.getHeight() ? graphPane.getWidth()/(2 * biggerDimension) : graphPane.getHeight()/(2*biggerDimension);
-        double vertexRadius = graphPane.getWidth() - graph.getNumOfColumns() * vertexRadiusGuess * 2 > graphPane.getHeight() - graph.getNumOfRows() * vertexRadiusGuess * 2 ?
-                vertexRadiusGuess * graphPane.getWidth() / (graph.getNumOfColumns() * vertexRadiusGuess * 2):
-                vertexRadiusGuess * graphPane.getHeight() / (graph.getNumOfRows() * vertexRadiusGuess * 2);
-        for(int i = 0; i<graph.getNumOfVertices(); i++){
-            Circle vertexCircle = new Circle(vertexRadius/2);
-            double x = graphPane.getLayoutX() + vertexRadius*0.5 + (i - graph.getNumOfColumns()*(i / graph.getNumOfColumns())) * vertexRadius*2;
-            double y = graphPane.getLayoutY() + vertexRadius*0.5 + (i/ graph.getNumOfColumns()) * vertexRadius * 2;
-            vertexCircle.setCenterX(x);
-            vertexCircle.setCenterY(y);
-            vertexCircle.setFill(Paint.valueOf("Black"));
-            graphPane.getChildren().add(vertexCircle);
+        double vertexRadius;
+        double scrollbarWidth = 20;
+        double graphPaneWidth = graphPane.getWidth() - scrollbarWidth;
+        double graphPaneHeight = graphPane.getHeight() - scrollbarWidth;
+        if(graphPane.getWidth() / graphPane.getHeight() < graph.getNumOfColumns() / graph.getNumOfRows()){
+            vertexRadius = graphPaneWidth / graph.getNumOfColumns() / 4;
+        } else{
+            vertexRadius = graphPaneHeight / graph.getNumOfRows() / 4;
+        }
+        for(int i = 0; i<graph.getNumOfRows(); i++){
+            for(int n = 0; n< graph.getNumOfColumns(); n++){
+                Circle vertexCircle = new Circle(vertexRadius);
+                vertexCircle.setCenterX(graphPane.getLayoutX() + n * vertexRadius * 4 + vertexRadius);
+                vertexCircle.setCenterY(graphPane.getLayoutY() + i * vertexRadius * 4 + vertexRadius);
+                vertexCircle.setFill(Paint.valueOf("Black"));
+                graphPane.getChildren().add(vertexCircle);
+            }
         }
     }
 
