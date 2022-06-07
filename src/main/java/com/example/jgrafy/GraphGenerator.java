@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 public abstract class GraphGenerator {
 
-    public static Graph readGraphFromFile(String filePath) throws Exception {
-        Scanner sc = new Scanner(new File(filePath)).useDelimiter(Pattern.compile("\\s+"));
+    public static Graph readGraphFromFile(File filePath) throws Exception {
+        Scanner sc = new Scanner(filePath).useDelimiter(Pattern.compile("\\s+"));
         int numOfRows = Integer.parseInt(sc.next(Pattern.compile("\\d+")));
         int numOfCols = Integer.parseInt(sc.next(Pattern.compile("\\d+")));
         Graph graph = new Graph(numOfRows, numOfCols);

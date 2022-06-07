@@ -17,7 +17,9 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Random;
@@ -141,12 +143,12 @@ public class UISettingsController {
     }
 
     public void openGraph(ActionEvent actionEvent) {
-        try{GraphGenerator.readGraphFromFile("newGraph.txt");
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(PathlistPane.getScene().getWindow());
+        System.out.println(file.getAbsolutePath());
+        try{Main.setGraph(GraphGenerator.readGraphFromFile(file));
         Status.setText("Graph opened");}
-        catch(Exception exception){Status.setText("Couldn't find file to read");}
-        //setGraph(GraphGenerator.readGraphFromFile(""));
-        //
-        // Status.setText(generatorHbox.getWidth() + "");
+        catch(Exception exception){Status.setText("An error occured\nopening file");}
     }
 
     public void generateGraph(ActionEvent actionEvent) {
@@ -196,6 +198,7 @@ public class UISettingsController {
             System.out.println(exception);
         }
     }
+
     private void drawPath(AnchorPane PathlistPane, double blockX, double blockY, int verticeFrom,int verticeTo,double pathValue, Color color){
         Line separator = null;
         //Polygon arrowPoint = null;
@@ -227,7 +230,11 @@ public class UISettingsController {
         PathlistPane.getChildren().add(valueLabel);
     }
 
-
+    public void clearAll(){
+        PathlistPane.getChildren().clear();
+        Main.getPath().clear();
+        PathlistPane.prefHeightProperty().bind(PathlistScroll.heightProperty());
+    }
     public void drawPathlist(Graph graph, AnchorPane graphPane, Path[] paths) {
         double scrollbarWidth = 15;
         double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;

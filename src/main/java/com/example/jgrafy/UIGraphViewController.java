@@ -79,7 +79,6 @@ public class UIGraphViewController {
     }
 
     public void drawGraph(Graph graph, AnchorPane graphPane, Path[] paths){
-        System.out.println(graph.getVertices()[61].weightLeft);
         double vertexRadius;
         double scrollbarWidth = 15;
         double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;
