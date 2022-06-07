@@ -16,6 +16,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -53,39 +54,27 @@ public class UISettingsController {
     private AnchorPane PathlistPane;
     @FXML
     private ScrollPane PathlistScroll;
-    public void initialize(){
-        ((HBox)(generatorPane.getChildren().get(0))).prefWidthProperty().bind(generatorPane.widthProperty());
-        ((HBox)(openSavePane.getChildren().get(0))).prefWidthProperty().bind(openSavePane.widthProperty());
-        ((HBox)(cohesionPane.getChildren().get(0))).prefWidthProperty().bind(cohesionPane.widthProperty());
+    public void initialize() {
+        ((HBox) (generatorPane.getChildren().get(0))).prefWidthProperty().bind(generatorPane.widthProperty());
+        ((HBox) (openSavePane.getChildren().get(0))).prefWidthProperty().bind(openSavePane.widthProperty());
+        ((HBox) (cohesionPane.getChildren().get(0))).prefWidthProperty().bind(cohesionPane.widthProperty());
         PathlistPane.prefWidthProperty().bind(PathlistScroll.widthProperty());
         PathlistPane.prefHeightProperty().bind(PathlistScroll.heightProperty());
-    }
-    public void PlusClicked(javafx.event.ActionEvent actionEvent)
-    {
-        System.out.println("Plus Clicked");
-    }
-    public void MinusClicked(javafx.event.ActionEvent actionEvent)
-    {
-        System.out.println("Minus Clicked");
     }
     public void addPath(javafx.event.ActionEvent actionEvent)
     {
         try
         {
-
             int numOfVertices=Main.getGraph().getNumOfColumns()*Main.getGraph().getNumOfRows()-1;
             pStart = Integer.parseInt(PathStart.getText());
             pEnd = Integer.parseInt(PathEnd.getText());
-
             if(0>pStart || 0>pEnd || pStart>numOfVertices || pEnd>numOfVertices)
             {
                 Status.setText("Enter numbers from \nrange 0 to "+numOfVertices);
             }
             else
             {
-
                 Path path=GraphAnalyzer.findShortestPath(pEnd,pStart,Main.getGraph());
-
                 if(path.pathValue==Double.POSITIVE_INFINITY)
                 {
                     Status.setText("Sorry, this path\ndo not exist");
@@ -94,6 +83,7 @@ public class UISettingsController {
                 {
                     Status.setText("New Path Added \nfrom " + pStart + " to " + pEnd+"\nvalue "+path.pathValue);
                     //System.out.println("TERaz");
+                    path.color = Color.GREEN;
                     Main.addPath(path);
                     System.out.println("spadłem z ");
                     drawPathlist(Main.getGraph(),PathlistPane,new Path[0]);
@@ -237,15 +227,15 @@ public class UISettingsController {
     }
 
 
-    public void drawPathlist(Graph graph, AnchorPane graphPane, Path[] paths){
+    public void drawPathlist(Graph graph, AnchorPane graphPane, Path[] paths) {
         double vertexRadius;
         double scrollbarWidth = 15;
         double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;
         double graphPaneHeight = graphPane.getPrefHeight() - scrollbarWidth;
 
-        for(int i = 0; i<paths.length; i++){
-                double blockX = graphPane.getLayoutX();
-                double blockY = graphPane.getLayoutY() - i *100;
+        for (int i = 0; i < paths.length; i++) {
+            double blockX = graphPane.getLayoutX();
+            double blockY = graphPane.getLayoutY() - i * 100;
 
                 drawPath(PathlistPane, blockX, blockY, paths[i].verticesInOrder[0], paths[i].verticesInOrder[-1], paths[i].pathValue, Color.valueOf("Black"));
 

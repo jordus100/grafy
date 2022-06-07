@@ -71,7 +71,7 @@ public class UIGraphViewController {
             weightLabel.setTextAlignment(TextAlignment.RIGHT);
         }
         weightLabel.setTextFill(Paint.valueOf("red"));
-        arrowBody.setFill(color);
+        arrowBody.setStroke(color);
         arrowPoint.setFill(color);
         graphPane.getChildren().add(arrowBody);
         graphPane.getChildren().add(arrowPoint);
@@ -79,6 +79,7 @@ public class UIGraphViewController {
     }
 
     public void drawGraph(Graph graph, AnchorPane graphPane, Path[] paths){
+        System.out.println(graph.getVertices()[61].weightLeft);
         double vertexRadius;
         double scrollbarWidth = 15;
         double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;
@@ -105,21 +106,22 @@ public class UIGraphViewController {
 
                 for(Direction direction : Direction.values()){
                     int neighbor = graph.getNeighbour((i*graph.getNumOfColumns() + n), direction);
+                    int vertex = i*graph.getNumOfColumns() + n;
                     Color pathColor = Color.BLACK;
                     for(Path path : paths) {
-                        for(int x = 0; x<path.verticesInOrder.length; x++)
+                        for(int x = 0; x<path.verticesInOrder.length - 1; x++)
                             if(path.verticesInOrder[x] == i*graph.getNumOfColumns() + n && path.verticesInOrder[x+1] == neighbor)
                                 pathColor = path.color;
                     }
                     if(neighbor >= 0){
-                        if(direction == Direction.Right && graph.getVertices()[neighbor].weightRight >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightRight, pathColor);
-                        if(direction == Direction.Left && graph.getVertices()[neighbor].weightLeft >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightLeft, pathColor);
-                        if(direction == Direction.Up && graph.getVertices()[neighbor].weightUp >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightUp, pathColor);
-                        if(direction == Direction.Down && graph.getVertices()[neighbor].weightDown >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightDown, pathColor);
+                        if(direction == Direction.Right && graph.getVertices()[vertex].weightRight >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[vertex].weightRight, pathColor);
+                        if(direction == Direction.Left && graph.getVertices()[vertex].weightLeft >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[vertex].weightLeft, pathColor);
+                        if(direction == Direction.Up && graph.getVertices()[vertex].weightUp >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[vertex].weightUp, pathColor);
+                        if(direction == Direction.Down && graph.getVertices()[vertex].weightDown >= 0)
+                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[vertex].weightDown, pathColor);
                     }
                 }
                 graphPane.getChildren().add(vertexCircle);
@@ -136,7 +138,7 @@ public class UIGraphViewController {
         graphPane.getChildren().clear();
         graphPane.setPrefWidth(graphPane.getPrefWidth() / 1.5);
         graphPane.setPrefHeight(graphPane.getPrefHeight() / 1.5);
-        drawGraph(Main.getGraph(), graphPane, new Path[0]);
+        drawGraph(Main.getGraph(), graphPane, Main.getPath() == null ? new Path[0] : Main.getPath().toArray(new Path[0]));
     }
 
     public void PlusClicked(ActionEvent actionEvent) {
@@ -145,13 +147,13 @@ public class UIGraphViewController {
         graphPane.getChildren().clear();
         graphPane.setPrefWidth(graphPane.getPrefWidth() * 1.5);
         graphPane.setPrefHeight(graphPane.getPrefHeight() * 1.5);
-        drawGraph(Main.getGraph(), graphPane, new Path[0]);
+        drawGraph(Main.getGraph(), graphPane, Main.getPath() == null ? new Path[0] : Main.getPath().toArray(new Path[0]));
     }
 
     public void DisplayClicked(ActionEvent actionEvent){
         graphPane.prefWidthProperty().bind(graphScroll.widthProperty());
         graphPane.prefHeightProperty().bind(graphScroll.heightProperty());
         graphPane.getChildren().clear();
-        drawGraph(Main.getGraph(), graphPane, new Path[0]);
+        drawGraph(Main.getGraph(), graphPane, Main.getPath() == null ? new Path[0] : Main.getPath().toArray(new Path[0]));
     }
 }
