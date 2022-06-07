@@ -72,16 +72,20 @@ public class UISettingsController {
     {
         try
         {
+
             int numOfVertices=Main.getGraph().getNumOfColumns()*Main.getGraph().getNumOfRows()-1;
             pStart = Integer.parseInt(PathStart.getText());
             pEnd = Integer.parseInt(PathEnd.getText());
+
             if(0>pStart || 0>pEnd || pStart>numOfVertices || pEnd>numOfVertices)
             {
                 Status.setText("Enter numbers from \nrange 0 to "+numOfVertices);
             }
             else
             {
+
                 Path path=GraphAnalyzer.findShortestPath(pEnd,pStart,Main.getGraph());
+
                 if(path.pathValue==Double.POSITIVE_INFINITY)
                 {
                     Status.setText("Sorry, this path\ndo not exist");
@@ -90,8 +94,10 @@ public class UISettingsController {
                 {
                     Status.setText("New Path Added \nfrom " + pStart + " to " + pEnd+"\nvalue "+path.pathValue);
                     //System.out.println("TERaz");
-                    //Main.addPath(path);
-
+                    Main.addPath(path);
+                    System.out.println("spadłem z ");
+                    drawPathlist(Main.getGraph(),PathlistPane,(Path[]) Main.getPath().toArray());
+                    System.out.println("rowerka :(");
                 }
             }
 
@@ -195,105 +201,55 @@ public class UISettingsController {
             System.out.println(exception);
         }
     }
-    private void addArrow(AnchorPane graphPane, double circleX, double circleY, double radius, Direction direction, double weight, Color color){
-        Line arrowBody = null;
-        Polygon arrowPoint = null;
-        arrowPoint = new Polygon();
-        Label weightLabel = new Label(new DecimalFormat("0.000000").format(weight));
-        weightLabel.setFont(Font.font("System", radius*0.35));
-        if(direction == Direction.Right){
-            arrowBody = new Line(circleX + radius, circleY - 0.25*radius, circleX + 3*radius, circleY - 0.25*radius);
-            arrowPoint.getPoints().addAll(arrowBody.getEndX() - radius*0.5, arrowBody.getEndY() - 0.25*radius,
-                    arrowBody.getEndX(), arrowBody.getEndY(),
-                    arrowBody.getEndX() - radius*0.5, arrowBody.getEndY() + 0.25*radius);
-            weightLabel.setLayoutX(arrowBody.getStartX());
-            weightLabel.setLayoutY(arrowBody.getStartY() - weightLabel.getFont().getSize() * 1.5);
-        }
-        if(direction == Direction.Left){
-            arrowBody = new Line(circleX - radius, circleY + 0.25*radius, circleX - 3*radius, circleY + 0.25*radius);
-            arrowPoint.getPoints().addAll(arrowBody.getEndX() + radius*0.5, arrowBody.getEndY() - 0.25*radius,
-                    arrowBody.getEndX(), arrowBody.getEndY(),
-                    arrowBody.getEndX() + radius*0.5, arrowBody.getEndY() + 0.25*radius);
-            weightLabel.setLayoutX(arrowBody.getEndX() + radius*0.5);
-            weightLabel.setLayoutY(arrowBody.getEndY());
-            weightLabel.setTextAlignment(TextAlignment.RIGHT);
-        }
-        if(direction == Direction.Down){
-            arrowBody = new Line(circleX + 0.25*radius, circleY + radius, circleX + 0.25*radius, circleY + 3*radius);
-            arrowPoint.getPoints().addAll(arrowBody.getEndX() - radius*0.25, arrowBody.getEndY() - 0.5*radius,
-                    arrowBody.getEndX(), arrowBody.getEndY(),
-                    arrowBody.getEndX() + radius*0.25, arrowBody.getEndY() - 0.5*radius);
-            weightLabel.setLayoutX(arrowBody.getStartX() - weightLabel.getFont().getSize());
-            weightLabel.setLayoutY(arrowBody.getStartY() + radius*0.5);
-            weightLabel.setRotate(90);
-        }
-        if(direction == Direction.Up){
-            arrowBody = new Line(circleX - 0.25*radius, circleY - radius, circleX - 0.25*radius, circleY - 3*radius);
-            arrowPoint.getPoints().addAll(arrowBody.getEndX() - radius*0.25, arrowBody.getEndY() + 0.5*radius,
-                    arrowBody.getEndX(), arrowBody.getEndY(),
-                    arrowBody.getEndX() + radius*0.25, arrowBody.getEndY() + 0.5*radius);
-            weightLabel.setLayoutX(arrowBody.getEndX()  - weightLabel.getFont().getSize() * 3);
-            weightLabel.setLayoutY(arrowBody.getEndY() + radius);
-            weightLabel.setRotate(-90);
-            weightLabel.setTextAlignment(TextAlignment.RIGHT);
-        }
-        weightLabel.setTextFill(Paint.valueOf("red"));
-        arrowBody.setFill(color);
-        arrowPoint.setFill(color);
-        graphPane.getChildren().add(arrowBody);
-        graphPane.getChildren().add(arrowPoint);
-        graphPane.getChildren().add(weightLabel);
+    private void drawPath(AnchorPane PathlistPane, double blockX, double blockY, int verticeFrom,int verticeTo,double pathValue, Color color){
+        Line separator = null;
+        //Polygon arrowPoint = null;
+        //arrowPoint = new Polygon();
+        Label fromLabel = new Label(String.valueOf(pathValue));
+        Label toLabel = new Label(String.valueOf(pathValue));
+        Label valueLabel = new Label(new DecimalFormat("0.000000").format(pathValue));
+        fromLabel.setFont(Font.font("System", 2));
+        toLabel.setFont(Font.font("System", 2));
+        valueLabel.setFont(Font.font("System", 2));
+
+            separator = new Line(blockX , blockY-100, blockX + 100, blockY - 100);
+            //arrowPoint.getPoints().addAll(separator.getEndX() - radius*0.5, separator.getEndY() - 0.25*radius,
+                    //separator.getEndX(), separator.getEndY(),
+                    //separator.getEndX() - radius*0.5, separator.getEndY() + 0.25*radius);
+
+        fromLabel.setLayoutX(blockX+10);
+        fromLabel.setLayoutY(blockY-50);
+        toLabel.setLayoutX(blockX+60);
+        toLabel.setLayoutY(blockY-50);
+        valueLabel.setLayoutX(blockX+110);
+        valueLabel.setLayoutY(blockY-50);
+
+        fromLabel.setTextFill(Paint.valueOf("black"));
+        fromLabel.setTextFill(Paint.valueOf("black"));
+        fromLabel.setTextFill(Paint.valueOf("black"));
+        separator.setFill(color);
+        //arrowPoint.setFill(color);
+        PathlistPane.getChildren().add(separator);
+        //PathlistPane.getChildren().add(arrowPoint);
+        PathlistPane.getChildren().add(fromLabel);
+        PathlistPane.getChildren().add(toLabel);
+        PathlistPane.getChildren().add(valueLabel);
     }
 
 
-    public void drawPath(Graph graph, AnchorPane graphPane, Path[] paths){
+    public void drawPathlist(Graph graph, AnchorPane graphPane, Path[] paths){
         double vertexRadius;
         double scrollbarWidth = 15;
         double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;
         double graphPaneHeight = graphPane.getPrefHeight() - scrollbarWidth;
-        if(graphPane.getPrefWidth() / graphPane.getPrefHeight() < graph.getNumOfColumns() / graph.getNumOfRows()){
-            vertexRadius = graphPaneWidth / graph.getNumOfColumns() / 4;
-        } else{
-            vertexRadius = graphPaneHeight / graph.getNumOfRows() / 4;
-        }
-        for(int i = 0; i<graph.getNumOfRows(); i++){
-            for(int n = 0; n< graph.getNumOfColumns(); n++){
-                Circle vertexCircle = new Circle(vertexRadius);
-                double circleX = graphPane.getLayoutX() + n * vertexRadius * 4 + vertexRadius;
-                double circleY = graphPane.getLayoutY() + i * vertexRadius * 4 + vertexRadius;
-                vertexCircle.setCenterX(circleX);
-                vertexCircle.setCenterY(circleY);
-                vertexCircle.setFill(Paint.valueOf("Black"));
 
-                Label vertexNumLabel = new Label(i*graph.getNumOfColumns() + n + "");
-                vertexNumLabel.setLayoutX(circleX - vertexRadius/4);
-                vertexNumLabel.setLayoutY(circleY - vertexRadius/4);
-                vertexNumLabel.setFont(Font.font("System", vertexRadius/1.5 / (vertexNumLabel.getText().length() + 1) * 2.5));
-                vertexNumLabel.setTextFill(Paint.valueOf("White"));
+        for(int i = 0; i<paths.length; i++){
+                double blockX = graphPane.getLayoutX();
+                double blockY = graphPane.getLayoutY() - i *100;
 
-                for(Direction direction : Direction.values()){
-                    int neighbor = graph.getNeighbour((i*graph.getNumOfColumns() + n), direction);
-                    Color pathColor = Color.BLACK;
-                    for(Path path : paths) {
-                        for(int x = 0; x<path.verticesInOrder.length; x++)
-                            if(path.verticesInOrder[x] == i*graph.getNumOfColumns() + n && path.verticesInOrder[x+1] == neighbor)
-                                pathColor = path.color;
-                    }
-                    if(neighbor >= 0){
-                        if(direction == Direction.Right && graph.getVertices()[neighbor].weightRight >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightRight, pathColor);
-                        if(direction == Direction.Left && graph.getVertices()[neighbor].weightLeft >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightLeft, pathColor);
-                        if(direction == Direction.Up && graph.getVertices()[neighbor].weightUp >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightUp, pathColor);
-                        if(direction == Direction.Down && graph.getVertices()[neighbor].weightDown >= 0)
-                            addArrow(graphPane, circleX, circleY, vertexRadius, direction, graph.getVertices()[neighbor].weightDown, pathColor);
-                    }
-                }
-                graphPane.getChildren().add(vertexCircle);
-                graphPane.getChildren().add(vertexNumLabel);
+                drawPath(PathlistPane, blockX, blockY, paths[i].verticesInOrder[0], paths[i].verticesInOrder[-1], paths[i].pathValue, Color.valueOf("Black"));
+
             }
         }
     }
 
-}
