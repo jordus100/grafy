@@ -143,11 +143,26 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <ScrollPane fx:id="PathlistScroll" layoutX="15.0" layoutY="35.0" prefHeight="129.0" prefWidth="200.0">
+                              <ScrollPane fx:id="PathlistScroll" layoutX="15.0" layoutY="54.0" prefHeight="110.0" prefWidth="200.0">
                                 <content>
                                   <AnchorPane fx:id="PathlistPane" minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="182.0" />
                                 </content>
                               </ScrollPane>
+                              <Label layoutX="13.0" layoutY="35.0" prefHeight="21.0" prefWidth="30.0" text="From:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="65.0" layoutY="35.0" prefHeight="21.0" prefWidth="30.0" text="To:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="115.0" layoutY="35.0" prefHeight="21.0" prefWidth="65.0" text="Path value:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
                         <Pane prefHeight="175.0" prefWidth="10000.0" style="-fx-background-color: silver;">

@@ -89,9 +89,7 @@ public class UISettingsController {
                     int blue = rand.nextInt(255);
                     path.color = Color.rgb(red, green, blue);
                     Main.addPath(path);
-                    System.out.println("spadłem z ");
                     drawPathlist(Main.getGraph(),PathlistPane,Main.getPath().toArray(new Path[0]));
-                    System.out.println("rowerka :(");
                 }
             }
 
@@ -143,6 +141,9 @@ public class UISettingsController {
     }
 
     public void openGraph(ActionEvent actionEvent) {
+        try{GraphGenerator.readGraphFromFile("newGraph.txt");
+        Status.setText("Graph opened");}
+        catch(Exception exception){Status.setText("Couldn't find file to read");}
         //setGraph(GraphGenerator.readGraphFromFile(""));
         //
         // Status.setText(generatorHbox.getWidth() + "");
@@ -182,7 +183,7 @@ public class UISettingsController {
     public void saveGraph(ActionEvent actionEvent) throws IOException {
         try
         {
-            Main.getGraph().saveToFile("nowyGraf.txt");
+            Main.getGraph().saveToFile("newGraph.txt");
             Status.setText("Graph saved");
         }
         catch(NullPointerException exception)
@@ -199,32 +200,28 @@ public class UISettingsController {
         Line separator = null;
         //Polygon arrowPoint = null;
         //arrowPoint = new Polygon();
-        Label fromLabel = new Label(String.valueOf(pathValue));
-        Label toLabel = new Label(String.valueOf(pathValue));
+        Label fromLabel = new Label(String.valueOf(verticeFrom));
+        Label toLabel = new Label(String.valueOf(verticeTo));
         Label valueLabel = new Label(new DecimalFormat("0.000000").format(pathValue));
-        fromLabel.setFont(Font.font("System", 2));
-        toLabel.setFont(Font.font("System", 2));
-        valueLabel.setFont(Font.font("System", 2));
+        fromLabel.setFont(Font.font("System", 20));
+        toLabel.setFont(Font.font("System", 20));
+        valueLabel.setFont(Font.font("System", 20));
 
-            separator = new Line(blockX , blockY-100, blockX + 100, blockY - 100);
-            //arrowPoint.getPoints().addAll(separator.getEndX() - radius*0.5, separator.getEndY() - 0.25*radius,
-                    //separator.getEndX(), separator.getEndY(),
-                    //separator.getEndX() - radius*0.5, separator.getEndY() + 0.25*radius);
+        separator = new Line(blockX , blockY+40, blockX+PathlistPane.getWidth(), blockY + 40);
 
         fromLabel.setLayoutX(blockX+10);
-        fromLabel.setLayoutY(blockY-50);
-        toLabel.setLayoutX(blockX+60);
-        toLabel.setLayoutY(blockY-50);
-        valueLabel.setLayoutX(blockX+110);
-        valueLabel.setLayoutY(blockY-50);
+        fromLabel.setLayoutY(blockY+10);
+        toLabel.setLayoutX(blockX+40);
+        toLabel.setLayoutY(blockY+10);
+        valueLabel.setLayoutX(blockX+80);
+        valueLabel.setLayoutY(blockY+10);
+        fromLabel.setTextFill(color);
+        toLabel.setTextFill(color);
 
-        fromLabel.setTextFill(Paint.valueOf("black"));
-        fromLabel.setTextFill(Paint.valueOf("black"));
-        fromLabel.setTextFill(Paint.valueOf("black"));
         separator.setFill(color);
-        //arrowPoint.setFill(color);
+
         PathlistPane.getChildren().add(separator);
-        //PathlistPane.getChildren().add(arrowPoint);
+
         PathlistPane.getChildren().add(fromLabel);
         PathlistPane.getChildren().add(toLabel);
         PathlistPane.getChildren().add(valueLabel);
@@ -232,15 +229,15 @@ public class UISettingsController {
 
 
     public void drawPathlist(Graph graph, AnchorPane graphPane, Path[] paths) {
-        double vertexRadius;
         double scrollbarWidth = 15;
         double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;
         double graphPaneHeight = graphPane.getPrefHeight() - scrollbarWidth;
 
         for (int i = 0; i < paths.length; i++) {
             double blockX = graphPane.getLayoutX();
-            double blockY = graphPane.getLayoutY() - i * 100;
-                System.out.println(paths[i].color);
+            double blockY = graphPane.getLayoutY() + i * 40;
+            graphPane.prefHeightProperty().unbind();
+            graphPane.setPrefHeight(40*(i+1));
                 drawPath(PathlistPane, blockX, blockY, paths[i].verticesInOrder[0], paths[i].verticesInOrder[paths[i].verticesInOrder.length-1], paths[i].pathValue, paths[i].color);
 
             }
