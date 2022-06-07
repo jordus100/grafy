@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 public class UISettingsController {
     @FXML
@@ -82,11 +83,14 @@ public class UISettingsController {
                 else
                 {
                     Status.setText("New Path Added \nfrom " + pStart + " to " + pEnd+"\nvalue "+path.pathValue);
-                    //System.out.println("TERaz");
-                    path.color = Color.GREEN;
+                    Random rand = new Random(System.currentTimeMillis());
+                    int red = rand.nextInt(255);
+                    int green = rand.nextInt(255);
+                    int blue = rand.nextInt(255);
+                    path.color = Color.rgb(red, green, blue);
                     Main.addPath(path);
                     System.out.println("spadłem z ");
-                    drawPathlist(Main.getGraph(),PathlistPane,new Path[0]);
+                    drawPathlist(Main.getGraph(),PathlistPane,Main.getPath().toArray(new Path[0]));
                     System.out.println("rowerka :(");
                 }
             }
@@ -236,8 +240,8 @@ public class UISettingsController {
         for (int i = 0; i < paths.length; i++) {
             double blockX = graphPane.getLayoutX();
             double blockY = graphPane.getLayoutY() - i * 100;
-
-                drawPath(PathlistPane, blockX, blockY, paths[i].verticesInOrder[0], paths[i].verticesInOrder[-1], paths[i].pathValue, Color.valueOf("Black"));
+                System.out.println(paths[i].color);
+                drawPath(PathlistPane, blockX, blockY, paths[i].verticesInOrder[0], paths[i].verticesInOrder[paths[i].verticesInOrder.length-1], paths[i].pathValue, paths[i].color);
 
             }
         }

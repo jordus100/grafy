@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-abstract class GraphGenerator {
+public abstract class GraphGenerator {
 
     public static Graph readGraphFromFile(String filePath) throws Exception {
         Scanner sc = new Scanner(new File(filePath)).useDelimiter(Pattern.compile("\\s+"));

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-class GraphAnalyzer {
+public class GraphAnalyzer {
 
     public static class CohesionRef{
         public boolean cohesive;

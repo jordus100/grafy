@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class Graph {
+public class Graph {
 
     private int numOfColumns;
 
