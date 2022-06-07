@@ -96,7 +96,7 @@ public class UISettingsController {
                     //System.out.println("TERaz");
                     Main.addPath(path);
                     System.out.println("spadłem z ");
-                    drawPathlist(Main.getGraph(),PathlistPane,(Path[]) Main.getPath().toArray());
+                    drawPathlist(Main.getGraph(),PathlistPane,new Path[0]);
                     System.out.println("rowerka :(");
                 }
             }
