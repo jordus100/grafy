@@ -3,6 +3,7 @@ package com.example.jgrafy;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 
 public class Graph {
 
@@ -102,13 +103,13 @@ public class Graph {
             for(Direction direction : Direction.values()){
                 if(getNeighbour(i, direction) != -1)
                     if(direction == Direction.Right)
-                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightRight);
+                        writer.printf(" %d :%s", getNeighbour(i, direction), new DecimalFormat("0.000000").format(vertices[i].weightRight).toString().replace(',','.'));
                     else if(direction == Direction.Left)
-                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightLeft);
+                        writer.printf(" %d :%s", getNeighbour(i, direction), (new DecimalFormat("0.000000").format(vertices[i].weightLeft).toString()).replace(',','.'));
                     else if(direction == Direction.Up)
-                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightUp);
+                        writer.printf(" %d :%s", getNeighbour(i, direction), new DecimalFormat("0.000000").format(vertices[i].weightUp).toString().replace(',','.'));
                     else if(direction == Direction.Down)
-                        writer.printf(" %d :%f", getNeighbour(i, direction), vertices[i].weightDown);
+                        writer.printf(" %d :%s", getNeighbour(i, direction), new DecimalFormat("0.000000").format(vertices[i].weightDown).toString().replace(',','.'));
             }
             writer.print("\n");
         }

@@ -14,11 +14,11 @@ public abstract class GraphGenerator {
         int numOfRows = Integer.parseInt(sc.next(Pattern.compile("\\d+")));
         int numOfCols = Integer.parseInt(sc.next(Pattern.compile("\\d+")));
         Graph graph = new Graph(numOfRows, numOfCols);
+        System.out.println(numOfCols);
         //now reading the rows
         sc.nextLine();
         int vertexNum = 0;
         while (vertexNum <= graph.getNumOfRows() * graph.getNumOfColumns()) {
-            System.out.println(vertexNum);
             String connection = sc.findInLine(Pattern.compile("\\d+ :\\d.\\d+"));
             if (connection == null) {
                 try {

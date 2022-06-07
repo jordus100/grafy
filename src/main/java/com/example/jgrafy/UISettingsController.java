@@ -185,7 +185,9 @@ public class UISettingsController {
     public void saveGraph(ActionEvent actionEvent) throws IOException {
         try
         {
-            Main.getGraph().saveToFile("newGraph.txt");
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showSaveDialog(PathlistPane.getScene().getWindow());
+            Main.getGraph().saveToFile(file.getAbsolutePath());
             Status.setText("Graph saved");
         }
         catch(NullPointerException exception)
