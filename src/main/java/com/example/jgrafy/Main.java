@@ -8,7 +8,9 @@ public class Main {
 
     static private Graph graph;
     static private List<Path> pathList;
-
+    public static void main(String[] args){
+        Application.Main(new String[0]);
+    }
     public static Graph getGraph()
     {
         return graph;
