@@ -56,14 +56,12 @@ public class GraphAnalyzer {
 
             if (graph.getNeighbour(nowChecked.number, Direction.Up) != -1 && verticeList[nowChecked.number].weightUp != -1)
                 if (verticeList[nowChecked.number].weightUp + nowChecked.pathTo < pathValues[graph.getNeighbour(nowChecked.number, Direction.Up)]) {
-                    //System.out.print("Size before"+queue.size()+'\n');
                     queue.remove(qVertices[graph.getNeighbour(nowChecked.number, Direction.Up)]);
                     qVertices[graph.getNeighbour(nowChecked.number, Direction.Up)].pathTo = verticeList[nowChecked.number].weightUp + nowChecked.pathTo;
                     queue.add(qVertices[graph.getNeighbour(nowChecked.number, Direction.Up)]);
 
                     ancestors[graph.getNeighbour(nowChecked.number, Direction.Up)] = nowChecked.number;
                     pathValues[graph.getNeighbour(nowChecked.number, Direction.Up)] = verticeList[nowChecked.number].weightUp + nowChecked.pathTo;
-                    //System.out.print("Size after"+queue.size()+'\n');
 
                 }
             if (graph.getNeighbour(nowChecked.number, Direction.Down) != -1 && verticeList[nowChecked.number].weightDown != -1)

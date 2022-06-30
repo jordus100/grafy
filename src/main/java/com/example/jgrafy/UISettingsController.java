@@ -203,8 +203,6 @@ public class UISettingsController {
 
     private void drawPath(AnchorPane PathlistPane, double blockX, double blockY, int verticeFrom,int verticeTo,double pathValue, Color color){
         Line separator = null;
-        //Polygon arrowPoint = null;
-        //arrowPoint = new Polygon();
         Label fromLabel = new Label(String.valueOf(verticeFrom));
         Label toLabel = new Label(String.valueOf(verticeTo));
         Label valueLabel = new Label(new DecimalFormat("0.000000").format(pathValue));
@@ -239,9 +237,6 @@ public class UISettingsController {
     }
     public void drawPathlist(Graph graph, AnchorPane graphPane, Path[] paths) {
         double scrollbarWidth = 15;
-        double graphPaneWidth = graphPane.getPrefWidth() - scrollbarWidth;
-        double graphPaneHeight = graphPane.getPrefHeight() - scrollbarWidth;
-
         for (int i = 0; i < paths.length; i++) {
             double blockX = graphPane.getLayoutX();
             double blockY = graphPane.getLayoutY() + i * 40;
